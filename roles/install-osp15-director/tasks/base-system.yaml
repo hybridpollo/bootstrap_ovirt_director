@@ -1,0 +1,56 @@
+---
+- name: Set the system hostname
+  hostname:
+    name: '{{ uc_short_name }}.{{ domain }}'
+
+- name: 'Sudo group exists'
+  group:
+     name: '{{ sudo_group }}'
+     state: present
+
+- name: 'Set the root password for the system'
+  user:
+    name: root
+    password: '{{ root_pass }}'
+    update_password: always
+    state: present
+
+- name: 'Ensure the {{ sudo_group }} group used for sudo exists'
+  group:
+    name: '{{ sudo_group }}'
+    state: present
+
+- name: 'Set the base users'
+  user: 
+    name: '{{ item.user_name }}'
+    uid: '{{ item.uid }}'
+    groups: '{{ sudo_group }}'
+    append: yes
+    shell: /bin/bash
+    password: '{{ user_pass }}'
+    update_password: always
+    state: present 
+  with_items: '{{ user_list }}'
+
+- name: 'Ensure /etc/sudoers.d directory exists' 
+  file: 
+     path: /etc/sudoers.d
+     state: directory
+     owner: root
+     group: root
+     mode: 0750
+
+- name: 'Ensure sudoers file'
+  template: 
+     src: templates/extra-sudo-users.j2
+     dest: /etc/sudoers.d/extra-sudo-users
+     owner: root
+     group: root
+     mode: 0440
+
+- name: Configure hosts file
+  lineinfile:
+    path: /etc/hosts
+    backup: true
+    regexp: '^127\.0\.0\.1'
+    line: '127.0.0.1   {{ uc_short_name }}.{{ domain}} localhost localhost.localdomain localhost4 localhost4.localdomain4'

@@ -1,0 +1,3 @@
+
+[undercloud]
+director ansible_host=osp15-dir.voltron.xyz  ansible_user=root

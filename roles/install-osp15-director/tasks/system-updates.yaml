@@ -1,0 +1,24 @@
+---
+- name: Update all packages
+  yum:
+    name: '*'
+    state: latest
+    update_cache: yes
+  register: is_updated
+
+- name: Reboot after updates
+  shell: sleep 5 && systemctl reboot
+  async: 1
+  poll: 0
+  ignore_errors: true
+  when:
+    is_updated is changed
+
+- name:  Wait for host to become responsive.
+  wait_for:
+    host: '{{ ansible_host }}'
+    port: 22
+    delay: 30
+    timeout: 120
+  delegate_to: localhost
+  when: is_updated is changed

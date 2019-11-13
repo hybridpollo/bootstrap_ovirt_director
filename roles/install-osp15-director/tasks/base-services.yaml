@@ -1,0 +1,22 @@
+---
+- name: 'Configure chrony ntp client'
+  template:
+    src: templates/chrony_server.j2
+    dest: /etc/chrony.conf
+    owner: root
+    group: root
+    mode: 0440
+  notify: 
+     - restart_chrony 
+  tags: base_services
+
+- name: 'Ensure base services started'
+  service: 
+    name: '{{ item }}'
+    state: started
+    enabled: true 
+  with_items:
+    - chronyd
+    - sshd
+  tags: base_services
+

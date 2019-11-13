@@ -1,0 +1,7 @@
+---
+- name: '[STARTING Playbook] Deploying the Undercloud VM'
+  import_playbook: deploy-director-vm.yaml
+
+- name: '[STARTING Playbook] Configuring the basic Undercloud Software'
+  import_playbook: configure-director.yaml
+

@@ -1,0 +1,8 @@
+---
+# tasks file for install-director
+- include: base-system.yaml 
+- include: satellite-register.yaml
+- include: system-updates.yaml
+- include: base-services.yaml
+- include: undercloud-packages.yaml
+- include: undercloud-config.yaml

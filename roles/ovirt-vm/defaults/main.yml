@@ -1,0 +1,41 @@
+---
+# default parameters
+# The variables are defined in the vault file
+#ovirt_url
+#ovirt_cluster_name
+#ovirt_username
+#ovirt_password:
+#rhn_activation_key
+#ovirt_vm_root_passwd:
+#ovirt_vm_ssh_key:
+# end variables defined in vault file
+
+# General Settings
+vm_domain: voltron.xyz
+
+# General Virtual Machine Settings
+ovirt_vm_name: 'osp15-dir.{{ vm_domain }}'
+ovirt_vm_cpu: 4
+ovirt_vm_ram: 12Gib
+ovirt_vm_ram_guaranteed: 12Gib
+ovirt_vm_disk_size: 200Gib
+ovirt_vm_username: root
+ovirt_vm_template: rhel-8-template
+ovirt_vm_state: present
+
+# Virtual Machine Nic Settings
+# primary nic
+ovirt_vnic_net_name: lab_ext_net
+ovirt_vnic: eth0
+ovirt_vnic_on_boot: true
+ovirt_vnic_boot_protocol: static
+ovirt_vnic_ip: 172.25.48.40
+ovirt_vnic_netmask: 255.255.254.0
+ovirt_vnic_gateway: 172.25.48.1
+ovirt_vm_dns_servers: "10.10.10.20 10.10.10.21"
+ovirt_vm_dns_search: '{{ vm_domain }}'
+
+# secondary nic
+ovirt_vnic_extra_net_name: provision_net
+ovirt_vnic_extra_nic: eth1
+...

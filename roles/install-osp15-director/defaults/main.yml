@@ -1,0 +1,42 @@
+---
+# default  vars file for install-director
+domain: voltron.xyz
+
+sudo_group: wheel
+
+time_servers:
+   - 0.pool.ntp.org
+   - 1.pool.ntp.org
+   - 2.pool.ntp.org
+
+user_list:
+  - { user_name: stack, uid: 1001, groups: '{{ sudo_group }}' } 
+
+uc_short_name: osp15-dir
+uc_user: stack
+uc_group: stack
+uc_home_path: /home/stack
+uc_dirs:
+  - images
+  - templates
+
+uc_packages:
+  - python3-tripleoclient
+  - rhosp-director-images
+  - rhosp-director-images-ipa
+
+# rhn activation name and key are vaulted
+# vault/vars/director-vars.yaml
+satellite_host: satellite.infra.arl.lab
+
+rhn_rpm_repos:
+  - rhel-8-for-x86_64-baseos-rpms
+  - rhel-8-for-x86_64-appstream-rpms
+  - rhel-8-for-x86_64-highavailability-rpms
+  - ansible-2.8-for-rhel-8-x86_64-rpms
+  - satellite-tools-6.5-for-rhel-8-x86_64-rpms
+  - openstack-15-for-rhel-8-x86_64-rpms
+  - fast-datapath-for-rhel-8-x86_64-rpms
+
+# variables used for the undercloud.conf
+

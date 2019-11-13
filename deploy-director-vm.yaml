@@ -1,0 +1,6 @@
+---
+- hosts: localhost
+  vars_files:
+    - vault/vars/ovirt-vars.yaml
+  roles:
+    - role: ovirt-vm

@@ -1,0 +1,7 @@
+---
+- hosts: director
+  vars_files:
+    - vault/vars/director-vars.yaml
+  roles:
+    - role: install-osp15-director
+

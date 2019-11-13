@@ -1,0 +1,35 @@
+---
+- name: 'Install katello consumer CA on host'
+  yum:
+    name: '{{ katello_rpm_url }}'
+    state: present
+    validate_certs: no
+
+- name: 'Enable Satellite Registration [If not registered]'
+  redhat_subscription:
+    state: present
+    org_id: '{{ rhn_org }}'
+    activationkey: '{{ rhn_activation_key }}'
+    force_register: yes
+    server_hostname: '{{ satellite_host }}'
+  register: sat_registration
+  tags:
+    - sat_install
+
+- name:  'Disable repositories not needed.'
+  rhsm_repository:
+    name: '*'
+    state: disabled
+  when: sat_registration.changed
+  tags:
+    - sat_install
+
+- name: 'Enable the required repositories'
+  rhsm_repository:
+    name: '{{ item }}'
+    state: enabled
+  with_items: 
+    '{{ rhn_rpm_repos }}'
+  when: sat_registration.changed
+  tags:
+    - sat_install

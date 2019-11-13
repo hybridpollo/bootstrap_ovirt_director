@@ -1,0 +1,16 @@
+---
+- name: Install tripleo | undercloud packages
+  yum: 
+    name: '{{ uc_packages }}'
+    state: present
+
+- name: Configure director templates and images directories
+  file:
+    path: '{{ uc_home_path }}/{{ item }}'
+    owner: '{{ uc_user }}'
+    group: '{{ uc_group }}'
+    mode: 0755
+    state: directory
+  with_items:
+    '{{ uc_dirs }}'
+

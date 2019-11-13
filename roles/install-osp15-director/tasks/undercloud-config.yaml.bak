@@ -1,0 +1,21 @@
+---
+- name: Copy default undercloud.conf from RPM installation director to /home/stack
+  copy:
+    src: /usr/share/python-tripleoclient/undercloud.conf.sample
+    dest: /home/stack/undercloud.conf
+    remote_src: yes
+  tags: undercloud_config
+
+- name: Removing default container registry search on undercloud 
+  lineinfile:
+    path: /etc/containers/registries.conf
+    regexp: '^registries = \[.*.io|.*.com|.*.net|.*.org'
+    state: absent
+  tags: undercloud_config
+
+- name: Setting default container registry search on undercloud  to registry.redhat.io
+  lineinfile:
+    path: /etc/containers/registries.conf
+    insertafter: '^\[registries.search.*'
+    line: "registries = ['registry.redhat.io']"
+  tags: undercloud_config
