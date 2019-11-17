@@ -14,13 +14,13 @@
 vm_domain: voltron.xyz
 
 # General Virtual Machine Settings
-ovirt_vm_name: 'osp15-dir.{{ vm_domain }}'
+ovirt_vm_name: 'osp13-dir.{{ vm_domain }}'
 ovirt_vm_cpu: 4
 ovirt_vm_ram: 12Gib
 ovirt_vm_ram_guaranteed: 12Gib
 ovirt_vm_disk_size: 200Gib
 ovirt_vm_username: root
-ovirt_vm_template: rhel-8-template
+ovirt_vm_template: rhel-7-template
 ovirt_vm_state: present
 
 # Virtual Machine Nic Settings

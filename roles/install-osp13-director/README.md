@@ -2,7 +2,7 @@ Role Name
 =========
 
 This role prepares a host with the base requirements necessary to install the
-Red Hat OpenStack Platform 15 Director.  
+Red Hat OpenStack Platform 13 Director.  
 
 Requirements
 ------------
