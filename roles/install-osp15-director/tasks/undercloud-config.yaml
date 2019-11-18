@@ -4,7 +4,8 @@
     src: /usr/share/python-tripleoclient/undercloud.conf.sample
     dest: /home/stack/undercloud.conf
     remote_src: yes
-  tags: undercloud_config
+  tags: 
+    - undercloud_config
 
 - name: Removing default container registry search on undercloud 
   lineinfile:
@@ -12,5 +13,16 @@
     regexp: '^registries.*\[*registry.access.redhat.com|quay.io|docker.io'
     line: "registries = ['registry.redhat.io']"
     state: present
-  tags: undercloud_config
+  tags: 
+    - undercloud_config
+
+- name: Fetching tenant openstack images
+  get_url: 
+    url: '{{ item }}'
+    dest: '{{ uc_home_path }}/tenant_images/'
+    validate_certs: no
+  with_items:
+    - '{{ tenant_image_url }}'
+  tags: 
+    - fetch_tenant_images
 

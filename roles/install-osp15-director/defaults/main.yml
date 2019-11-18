@@ -19,11 +19,16 @@ uc_home_path: /home/stack
 uc_dirs:
   - images
   - templates
+  - tenant_images
 
 uc_packages:
   - python3-tripleoclient
   - rhosp-director-images
   - rhosp-director-images-ipa
+
+tenant_image_url:
+  - 'https://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.img'
+  - 'https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.qcow2'
 
 # rhn activation name and key are vaulted
 # vault/vars/director-vars.yaml
@@ -37,6 +42,8 @@ rhn_rpm_repos:
   - satellite-tools-6.5-for-rhel-8-x86_64-rpms
   - openstack-15-for-rhel-8-x86_64-rpms
   - fast-datapath-for-rhel-8-x86_64-rpms
+
+
 
 # variables used for the undercloud.conf
 

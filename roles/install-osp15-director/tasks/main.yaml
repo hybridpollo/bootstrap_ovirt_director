@@ -6,3 +6,4 @@
 - include: base-services.yaml
 - include: undercloud-packages.yaml
 - include: undercloud-config.yaml
+- include: inject-ssh-key.yaml
