@@ -8,7 +8,7 @@
     mode: 0744
   tags: copy_ssh_keys
    
-- name: 'Copy ssh keys to destination: {{ uc_home_path }}/{{ uc_user }}'
+- name: 'Copy ssh keys to destination: {{ uc_home_path }}'
   copy:
     src: '/home/ariveral/.ssh/{{ item }}'
     dest: '{{ uc_home_path }}/.ssh' 

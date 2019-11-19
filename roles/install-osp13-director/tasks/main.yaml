@@ -1,8 +1,9 @@
 ---
-# tasks file for install-director
+# tasks file for install-osp13-director
 - include: base-system.yaml 
 - include: satellite-register.yaml
 - include: system-updates.yaml
 - include: base-services.yaml
 - include: undercloud-packages.yaml
 - include: undercloud-config.yaml
+- include: inject-ssh-key.yaml
