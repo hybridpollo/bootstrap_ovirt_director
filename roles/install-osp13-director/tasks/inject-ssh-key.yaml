@@ -1,5 +1,5 @@
 ---
-- name: 'Create the .ssh directory structure  for the {{ uc_user }} user'
+- name: 'Create the .ssh directory structure for the {{ uc_user }} user'
   file:
     path: '{{ uc_home_path }}/.ssh'
     state: directory
@@ -8,14 +8,12 @@
     mode: 0744
   tags: copy_ssh_keys
    
-- name: 'Copy ssh keys to destination: {{ uc_home_path }}'
+- name: 'Copy local ssh keys to destination: {{ uc_home_path }}'
   copy:
-    src: '/home/ariveral/.ssh/{{ item }}'
+    src: '{{ item }}'
     dest: '{{ uc_home_path }}/.ssh' 
     owner: '{{ uc_user }}'
     group: '{{ uc_user }}'
     mode: 0600
-  loop:
-    - id_rsa 
-    - id_rsa.pub
+  loop: '{{ github_ssh_keys }}'
   tags: copy_ssh_keys

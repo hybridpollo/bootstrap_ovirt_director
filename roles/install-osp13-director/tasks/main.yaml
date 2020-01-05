@@ -1,5 +1,5 @@
 ---
-# tasks file for install-osp13-director
+# tasks file for install-osp16-director
 - include: base-system.yaml 
 - include: satellite-register.yaml
 - include: system-updates.yaml

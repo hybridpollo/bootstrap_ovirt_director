@@ -5,40 +5,43 @@ domain: voltron.xyz
 sudo_group: wheel
 
 time_servers:
-   - 0.pool.ntp.org
-   - 1.pool.ntp.org
-   - 2.pool.ntp.org
+   - clock.nyc.he.net
+   - clock.fmt.he.net
+   - clock.sjc.he.net
 
 user_list:
   - { user_name: stack, uid: 1001, groups: '{{ sudo_group }}' } 
 
-uc_short_name: osp13-dir
+uc_short_hostname: osp16-dir
 uc_user: stack
 uc_group: stack
 uc_home_path: /home/stack
 uc_dirs:
-  - images
+  - overcloud_images
   - templates
-  - tenant_images
 
-uc_packages:
-  - python-tripleoclient
+uc_rpm_packages:
+  - python3-tripleoclient
   - rhosp-director-images
   - rhosp-director-images-ipa
-
-tenant_image_url:
-  - 'https://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.img'
-  - 'https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.qcow2'
+  - git
+  - bind-utils
 
 # rhn activation name and key are vaulted
 # vault/vars/director-vars.yaml
 satellite_host: satellite.infra.arl.lab
+katello_rpm_url: 'http://{{ satellite_host }}/pub/katello-ca-consumer-latest.noarch.rpm'
 
 rhn_rpm_repos:
-  - rhel-7-server-rpms 
-  - rhel-7-server-extras-rpms
-  - rhel-7-server-rh-common-rpms
-  - rhel-7-server-satellite-tools-6.3-rpms
-  - rhel-ha-for-rhel-7-server-rpms
-  - rhel-7-server-openstack-13-rpms
+  - rhel-8-for-x86_64-baseos-rpms 
+  - rhel-8-for-x86_64-appstream-rpms 
+  - rhel-8-for-x86_64-highavailability-rpms 
+  - ansible-2.8-for-rhel-8-x86_64-rpms 
+  - openstack-beta-for-rhel-8-x86_64-rpms 
+  - fast-datapath-for-rhel-8-x86_64-rpms
 
+# List of ssh keys are used to bootstrap git
+# these are copied via the inject-ssh-key.yaml task
+github_ssh_keys:
+  - /home/arlaporte/.ssh/id_rsa
+  - /home/arlaporte/.ssh/id_rsa.pub

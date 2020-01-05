@@ -1,16 +1,18 @@
 ---
-- name: Install tripleo | undercloud packages
+- name: 'Install tripleo | undercloud packages'
   yum: 
-    name: '{{ uc_packages }}'
+    name: '{{ uc_rpm_packages }}'
     state: present
+  register: rpm_install
+  until: rpm_install is not failed
+  retries: 5
 
-- name: Configure director templates and images directories
+- name: 'Configure director templates and image directories'
   file:
     path: '{{ uc_home_path }}/{{ item }}'
     owner: '{{ uc_user }}'
     group: '{{ uc_group }}'
     mode: 0755
     state: directory
-  with_items:
+  loop:
     '{{ uc_dirs }}'
-

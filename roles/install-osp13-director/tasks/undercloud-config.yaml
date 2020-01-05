@@ -1,5 +1,5 @@
 ---
-- name: 'Copy default undercloud.conf to {{ uc_home_path }}'
+- name: 'Copy default undercloud.conf to {{ uc_home_path }}/undercloud.conf'
   copy:
     src: /usr/share/python-tripleoclient/undercloud.conf.sample
     dest: '{{ uc_home_path }}/undercloud.conf'
@@ -7,7 +7,7 @@
   tags: 
     - undercloud_config
 
-- name: Removing default container registry search on undercloud 
+- name: 'Removing default container registry search on undercloud'
   lineinfile:
     path: /etc/containers/registries.conf
     regexp: '^registries.*\[*registry.access.redhat.com|quay.io|docker.io'
@@ -16,12 +16,14 @@
   tags: 
     - undercloud_config
 
-- name: Fetching tenant openstack images
-  get_url: 
-    url: '{{ item }}'
-    dest: '{{ uc_home_path }}/tenant_images/'
-    validate_certs: no
-  with_items:
-    - '{{ tenant_image_url }}'
+- name: 'Unpacking the director images into the {{ us_home_path }}/overcloud_images directory.'
+  unarchive:
+    remote_src: yes
+    src: '{{ item }}'
+    dest: '{{ uc_home_path }}/overcloud_images'
+  loop:
+    - /usr/share/rhosp-director-images/overcloud-full-latest-16.0.tar
+    - /usr/share/rhosp-director-images/ironic-python-agent-latest-16.0.tar
   tags: 
-    - fetch_tenant_images
+    - fetch_overcloud_images
+
