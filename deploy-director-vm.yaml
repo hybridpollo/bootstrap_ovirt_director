@@ -1,5 +1,8 @@
 ---
-- hosts: localhost
+- hosts: deploy_vm
+  vars: 
+    vm_domain: voltron.xyz
+    ovirt_vm_name: 'osp-dir.{{ vm_domain }}'
   vars_files:
     - vault/vars/ovirt-vars.yaml
   roles:

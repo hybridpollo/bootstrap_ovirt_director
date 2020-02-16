@@ -14,8 +14,8 @@
 vm_domain: voltron.xyz
 
 # General Virtual Machine Settings
-ovirt_vm_name: 'osp13-dir.{{ vm_domain }}'
-ovirt_vm_cpu: 4
+ovirt_vm_name: 'osp-dir.{{ vm_domain }}'
+ovirt_vm_cpu: 8
 ovirt_vm_ram: 12Gib
 ovirt_vm_ram_guaranteed: 12Gib
 ovirt_vm_disk_size: 200Gib
