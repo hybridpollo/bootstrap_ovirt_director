@@ -2,7 +2,7 @@
 localhost ansible_host=localhost ansible_connection=local
 
 [deploy_vm:vars]
-ansible_python_interpreter=/home/ariveral/venvs/ansible_workspace/bin/python3
+ansible_python_interpreter=/home/ariveral/venvs/ansible_workspace/bin/python
 
 [undercloud]
 director ansible_host=osp-dir.voltron.xyz  ansible_user=root
