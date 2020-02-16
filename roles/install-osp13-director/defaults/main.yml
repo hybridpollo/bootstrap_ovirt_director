@@ -12,7 +12,7 @@ time_servers:
 user_list:
   - { user_name: stack, uid: 1001, groups: '{{ sudo_group }}' } 
 
-uc_short_hostname: osp16-dir
+uc_short_hostname: osp-dir
 uc_user: stack
 uc_group: stack
 uc_home_path: /home/stack
@@ -21,11 +21,12 @@ uc_dirs:
   - templates
 
 uc_rpm_packages:
-  - python3-tripleoclient
+  - python-tripleoclient
   - rhosp-director-images
   - rhosp-director-images-ipa
   - git
   - bind-utils
+  - ceph-ansible
 
 # rhn activation name and key are vaulted
 # vault/vars/director-vars.yaml
@@ -33,12 +34,13 @@ satellite_host: satellite.infra.arl.lab
 katello_rpm_url: 'http://{{ satellite_host }}/pub/katello-ca-consumer-latest.noarch.rpm'
 
 rhn_rpm_repos:
-  - rhel-8-for-x86_64-baseos-rpms 
-  - rhel-8-for-x86_64-appstream-rpms 
-  - rhel-8-for-x86_64-highavailability-rpms 
-  - ansible-2.8-for-rhel-8-x86_64-rpms 
-  - openstack-beta-for-rhel-8-x86_64-rpms 
-  - fast-datapath-for-rhel-8-x86_64-rpms
+  - rhel-7-server-rpms
+  - rhel-7-server-extras-rpms
+  - rhel-7-server-rh-common-rpms
+  - rhel-7-server-satellite-tools-6.3-rpms
+  - rhel-ha-for-rhel-7-server-rpms
+  - rhel-7-server-openstack-13-rpms
+  - rhel-7-server-rhceph-3-tools-rpms
 
 # List of ssh keys are used to bootstrap git
 # these are copied via the inject-ssh-key.yaml task
