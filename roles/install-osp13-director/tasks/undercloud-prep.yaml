@@ -1,12 +1,4 @@
 ---
-- name: 'Copy default undercloud.conf to {{ uc_home_path }}/undercloud.conf'
-  copy:
-    src: /usr/share/instack-undercloud/undercloud.conf.sample
-    dest: '{{ uc_home_path }}/undercloud.conf'
-    remote_src: yes
-  tags: 
-    - prep_director
-
 - name: 'Install tripleo | undercloud packages'
   yum: 
     name: '{{ uc_rpm_packages }}'
@@ -38,3 +30,12 @@
   tags:
     - fetch_overcloud_images
     - prep_director
+
+- name: 'Copy default undercloud.conf to {{ uc_home_path }}/undercloud.conf'
+  copy:
+    src: /usr/share/instack-undercloud/undercloud.conf.sample
+    dest: '{{ uc_home_path }}/undercloud.conf'
+    remote_src: yes
+  tags: 
+    - prep_director
+
