@@ -1,8 +1,13 @@
 ---
-- name: 'Configuring {{ ansible_host }} for installation of RHOSP13'
+- name: 'Configuring Undercloud on {{ uc_short_hostname }}.{{ domain }} for installation of RHOSP 13.'
   hosts: undercloud
-  vars_files:
-    - vault/vars/director-vars.yaml
   roles:
     - role: install-osp13-director
-
+  vars_files:
+    - vault/vars/director-vars.yaml
+  vars:
+    github_ssh_keys:
+      - /home/arlaporte/.ssh/id_rsa
+      - /home/arlaporte/.ssh/id_rsa.pub
+    osp_templates_repo: git@github.com:hybridpollo/osp_templates.git
+    osp_templates_branch: osp13_hci

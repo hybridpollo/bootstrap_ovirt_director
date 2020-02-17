@@ -33,7 +33,6 @@
   rhsm_repository:
     name: '*'
     state: disabled
-  when: sat_registration.changed
   retries: 10 
   tags:
     - sat_install
@@ -43,7 +42,6 @@
     name: '{{ item }}'
     state: enabled
   loop: '{{ rhn_rpm_repos }}'
-  when: sat_registration.changed
   register: repo_enabled
   retries: 10 
   tags:

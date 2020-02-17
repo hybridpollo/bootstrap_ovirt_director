@@ -1,15 +1,10 @@
-# variables defined in inventory will take precedence over variables
-# that are defined in roles-dir/<role>/defaults/main.yaml
 ---
 deploy_vm:
   hosts:
-    localhost: 
+    localhost:
       ansible_connection: local
   vars:
     ansible_python_interpreter: /home/arlaporte/ansible_workspace/bin/python
-    github_ssh_keys:
-      - /home/arlaporte/.ssh/id_rsa
-      - /home/arlaporte/.ssh/id_rsa.pub
 
 undercloud:
   hosts:
