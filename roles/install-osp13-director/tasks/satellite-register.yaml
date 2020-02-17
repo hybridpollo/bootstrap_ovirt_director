@@ -21,6 +21,7 @@
     server_hostname: '{{ satellite_host }}'
     org_id: '{{ rhn_org }}'
     activationkey: '{{ rhn_activation_key }}'
+    force_register: yes
     state: present
   when: "'Unknown' in reg_status.stdout"
   retries: 10
