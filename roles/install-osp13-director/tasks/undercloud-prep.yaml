@@ -1,0 +1,40 @@
+---
+- name: 'Copy default undercloud.conf to {{ uc_home_path }}/undercloud.conf'
+  copy:
+    src: /usr/share/python-tripleoclient/undercloud.conf.sample
+    dest: '{{ uc_home_path }}/undercloud.conf'
+    remote_src: yes
+  tags: 
+    - prep_director
+
+- name: 'Install tripleo | undercloud packages'
+  yum: 
+    name: '{{ uc_rpm_packages }}'
+    state: present
+  register: rpm_install
+  until: rpm_install is not failed
+  retries: 10
+  tags: prep_director
+
+- name: 'Configure director templates and image directories'
+  file:
+    path: '{{ uc_home_path }}/{{ item }}'
+    owner: '{{ uc_user }}'
+    group: '{{ uc_group }}'
+    mode: 0755
+    state: directory
+  loop:
+    '{{ uc_dirs }}'
+  tags: prep_director
+
+- name: 'Unpacking the director images into the {{ uc_home_path }}/overcloud_images directory.'
+  unarchive:
+    remote_src: yes
+    src: '{{ item }}'
+    dest: '{{ uc_home_path }}/overcloud_images'
+  loop:
+    - /usr/share/rhosp-director-images/overcloud-full-latest.tar
+    - /usr/share/rhosp-director-images/ironic-python-agent-latest.tar
+  tags:
+    - fetch_overcloud_images
+    - prep_director

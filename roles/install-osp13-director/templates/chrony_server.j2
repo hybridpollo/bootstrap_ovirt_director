@@ -4,7 +4,7 @@
 # Please consider joining the pool (http://www.pool.ntp.org/join.html).
 
 {% for server in time_servers %}
-pool {{ server }} iburst offline  
+server {{ server }} iburst
 {% endfor %}
 
 # Record the rate at which the system clock gains/losses time.

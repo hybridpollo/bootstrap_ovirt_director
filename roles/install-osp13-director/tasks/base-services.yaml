@@ -8,15 +8,16 @@
     mode: 0440
   notify: 
      - restart_chrony 
-  tags: base_services
+  tags: 
+    - base_services
 
 - name: 'Ensure base services started'
   service: 
     name: '{{ item }}'
     state: started
     enabled: true 
-  with_items:
+  loop:
     - chronyd
     - sshd
-  tags: base_services
-
+  tags: 
+    - base_services

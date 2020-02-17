@@ -1,12 +1,7 @@
 ---
 - name: Set the system hostname
   hostname:
-    name: '{{ uc_short_name }}.{{ domain }}'
-
-- name: 'Sudo group exists'
-  group:
-     name: '{{ sudo_group }}'
-     state: present
+    name: '{{ uc_short_hostname }}.{{ domain }}'
 
 - name: 'Set the root password for the system'
   user:
@@ -15,12 +10,12 @@
     update_password: always
     state: present
 
-- name: 'Ensure the {{ sudo_group }} group used for sudo exists'
+- name: 'Ensure the configured sudo group: {{ sudo_group }} exists.'
   group:
     name: '{{ sudo_group }}'
     state: present
 
-- name: 'Set the base users'
+- name: 'Set the base users.'
   user: 
     name: '{{ item.user_name }}'
     uid: '{{ item.uid }}'
@@ -30,7 +25,7 @@
     password: '{{ user_pass }}'
     update_password: always
     state: present 
-  with_items: '{{ user_list }}'
+  loop: '{{ user_list }}'
 
 - name: 'Ensure /etc/sudoers.d directory exists' 
   file: 
@@ -40,7 +35,7 @@
      group: root
      mode: 0750
 
-- name: 'Ensure sudoers file'
+- name: 'Ensure sudoers file exists.'
   template: 
      src: templates/extra-sudo-users.j2
      dest: /etc/sudoers.d/extra-sudo-users
@@ -48,9 +43,9 @@
      group: root
      mode: 0440
 
-- name: Configure hosts file
+- name: 'Configure hosts file'
   lineinfile:
     path: /etc/hosts
     backup: true
     regexp: '^127\.0\.0\.1'
-    line: '127.0.0.1   {{ uc_short_name }}.{{ domain}} localhost localhost.localdomain localhost4 localhost4.localdomain4'
+    line: '127.0.0.1   {{ uc_short_hostname }}.{{ domain}} localhost localhost.localdomain localhost4 localhost4.localdomain4'
