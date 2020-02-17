@@ -1,5 +1,6 @@
 ---
-- hosts: deploy_vm
+- name:  'Deploying virtual machine {{ ovirt_vm_name }}'
+  hosts: deploy_vm
   vars: 
     vm_domain: voltron.xyz
     ovirt_vm_name: 'osp-dir.{{ vm_domain }}'

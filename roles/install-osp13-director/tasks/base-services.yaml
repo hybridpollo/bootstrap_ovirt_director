@@ -8,7 +8,8 @@
     mode: 0440
   notify: 
      - restart_chrony 
-  tags: base_services
+  tags: 
+    - base_services
 
 - name: 'Ensure base services started'
   service: 
@@ -18,4 +19,5 @@
   loop:
     - chronyd
     - sshd
-  tags: base_services
+  tags: 
+    - base_services

@@ -26,6 +26,8 @@ uc_rpm_packages:
   - rhosp-director-images-ipa
   - git
   - bind-utils
+  - tmux
+  - vim-enhanced
   - ceph-ansible
 
 # rhn activation name and key are vaulted
@@ -45,5 +47,9 @@ rhn_rpm_repos:
 # List of ssh keys are used to bootstrap git
 # these are copied via the inject-ssh-key.yaml task
 github_ssh_keys:
-  - /home/arlaporte/.ssh/id_rsa
-  - /home/arlaporte/.ssh/id_rsa.pub
+  - /home/ariveral/.ssh/id_rsa
+  - /home/ariveral/.ssh/id_rsa.pub
+
+# Git repository to clone
+osp_templates_repo: git@github.com:hybridpollo/osp_templates.git
+osp_templates_branch: osp13_hci

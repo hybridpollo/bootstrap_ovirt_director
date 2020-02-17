@@ -11,6 +11,7 @@
   yum:
     name: '{{ katello_rpm_url }}'
     state: present
+  retries: 10
   when: "'Unknown' in reg_status.stdout"
   tags:
     - sat_install
@@ -22,6 +23,7 @@
     activationkey: '{{ rhn_activation_key }}'
     state: present
   when: "'Unknown' in reg_status.stdout"
+  retries: 10
   register: sat_registration
   tags:
     - sat_install
@@ -31,6 +33,7 @@
     name: '*'
     state: disabled
   when: sat_registration.changed
+  retries: 10 
   tags:
     - sat_install
 
@@ -40,19 +43,7 @@
     state: enabled
   loop: '{{ rhn_rpm_repos }}'
   when: sat_registration.changed
+  register: repo_enabled
+  retries: 10 
   tags:
     - sat_install
-  register: repo_enabled
-  until: repo_enabled is not failed
-  retries: 5  
-
-- name: 'Install ceph-ansible rpms.'
-  yum:
-    name: '{{ item }}'
-    state: present
-  register: ceph_rpms_install
-  until: ceph_rpms_install is not failed
-  retries: 5  
-  loop:
-    - ftp://partners.redhat.com/f0533d58c4961ffb2ee6b3877025e23b/rhel-8/Tools/x86_64/os/Packages/python3-notario-0.0.16-2.el8cp.noarch.rpm
-    - ftp://partners.redhat.com/f0533d58c4961ffb2ee6b3877025e23b/rhel-8/Tools/x86_64/os/Packages/ceph-ansible-4.0.5-1.el8cp.noarch.rpm

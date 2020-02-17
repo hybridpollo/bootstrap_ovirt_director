@@ -4,6 +4,5 @@
 - include: satellite-register.yaml
 - include: system-updates.yaml
 - include: base-services.yaml
-- include: undercloud-packages.yaml
-- include: undercloud-config.yaml
-- include: inject-ssh-key.yaml
+- include: undercloud-prep.yaml
+- include: fetch-git-templates.yaml

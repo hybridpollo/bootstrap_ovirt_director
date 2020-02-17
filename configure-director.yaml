@@ -1,5 +1,6 @@
 ---
-- hosts: director
+- name: 'Configuring {{ ansible_host }} for installation of RHOSP13'
+  hosts: undercloud
   vars_files:
     - vault/vars/director-vars.yaml
   roles:
