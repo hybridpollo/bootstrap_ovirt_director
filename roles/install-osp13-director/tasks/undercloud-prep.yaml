@@ -8,7 +8,7 @@
   retries: 10
   tags: prep_director
 
-- name: 'Configure director templates and image directories'
+- name: 'Create templates and image directories'
   file:
     path: '{{ uc_home_path }}/{{ item }}'
     owner: '{{ uc_user }}'
