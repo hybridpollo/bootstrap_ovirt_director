@@ -1,11 +1,13 @@
 ---
-- name: 'Install tripleo | undercloud packages'
+- name: 'Install tripleo | undercloud packages.'
   yum: 
     name: '{{ uc_rpm_packages }}'
-    state: present
-  register: rpm_install
-  until: rpm_install is not failed
+    state: installed
+    update_cache: yes
+  register: result
+  until: result is succeeded 
   retries: 10
+  delay: 5
   tags: prep_director
 
 - name: 'Create templates and image directories'
@@ -19,7 +21,7 @@
     '{{ uc_dirs }}'
   tags: prep_director
 
-- name: 'Unpacking the director images into the {{ uc_home_path }}/overcloud_images directory.'
+- name: 'Extracting overcloud deployment images into the {{ uc_home_path }}/overcloud_images directory.'
   unarchive:
     remote_src: yes
     src: '{{ item }}'

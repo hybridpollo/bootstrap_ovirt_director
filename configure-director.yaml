@@ -7,7 +7,7 @@
     - vault/vars/director-vars.yaml
   vars:
     github_ssh_keys:
-      - /home/arlaporte/.ssh/id_rsa
-      - /home/arlaporte/.ssh/id_rsa.pub
+      - /home/ariveral/.ssh/id_rsa
+      - /home/ariveral/.ssh/id_rsa.pub
     osp_templates_repo: git@github.com:hybridpollo/osp_templates.git
     osp_templates_branch: osp13_hci
