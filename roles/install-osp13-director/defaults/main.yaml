@@ -52,3 +52,33 @@ github_ssh_keys:
 # Git repository to clone
 osp_templates_repo: git@github.com:hybridpollo/osp_templates.git
 osp_templates_branch: osp13_hci
+
+# undercloud.conf parameters
+# these variables below are used to configure the undercloud.conf
+# not every variable is parametrized
+# please review the default file 
+# /usr/share/instack-undercloud/undercloud.conf.sample 
+# for all available parameters
+overcloud_domain: voltron.xyz
+undercloud_local_interface: eth1
+undercloud_local_mtu: 1500
+undercloud_enable_uefi: false
+undercloud_enable_debug: false
+undercloud_enable_tempest: false
+undercloud_enable_ui: false
+undercloud_enable_clean_nodes: true
+undercloud_local_ip: 172.16.24.2/24
+undercloud_public_vip: 172.16.24.3
+undercloud_admin_vip: 172.16.24.4
+undercloud_provisioning_cidr: 172.16.24.0/24
+undercloud_dhcp_provisioning_start: 172.16.24.5
+undercloud_dhcp_provisioning_end: 172.16.24.24
+undercloud_dhcp_inspection_start: 172.16.24.100
+undercloud_dhcp_inspection_end: 172.16.24.120
+undercloud_dhcp_gateway: 172.16.24.1
+undercloud_name_servers:
+  - 10.10.11.3
+  - 8.8.8.8
+undercloud_time_servers:
+   - clock.nyc.he.net
+   - clock.fmt.he.net

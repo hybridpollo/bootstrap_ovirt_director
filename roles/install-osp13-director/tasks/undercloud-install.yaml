@@ -8,7 +8,7 @@
   until: result is succeeded 
   retries: 10
   delay: 5
-  tags: prep_director
+  tags: undercloud_install
 
 - name: 'Create templates and image directories'
   file:
@@ -19,7 +19,7 @@
     state: directory
   loop:
     '{{ uc_dirs }}'
-  tags: prep_director
+  tags: undercloud_install
 
 - name: 'Extracting overcloud deployment images into the {{ uc_home_path }}/overcloud_images directory.'
   unarchive:
@@ -31,13 +31,24 @@
     - /usr/share/rhosp-director-images/ironic-python-agent-latest.tar
   tags:
     - fetch_overcloud_images
-    - prep_director
+    - undercloud_install
 
-- name: 'Copy default undercloud.conf to {{ uc_home_path }}/undercloud.conf'
-  copy:
-    src: /usr/share/instack-undercloud/undercloud.conf.sample
+- name: 'Configure the undercloud.conf for OSP 13 from a template.'
+  template:
+    src: undercloud.conf.j2
     dest: '{{ uc_home_path }}/undercloud.conf'
-    remote_src: yes
-  tags: 
-    - prep_director
+    owner: stack
+    group: stack
+    mode: 0644
+  register: config_gen
+  tags: undercloud_install
 
+- name: 'Perform the undercloud installation'
+  shell: >
+    openstack undercloud install
+  args:
+    chdir: /home/stack
+  become: yes
+  become_user: stack
+  when: config_gen.changed 
+  tags: undercloud_install
