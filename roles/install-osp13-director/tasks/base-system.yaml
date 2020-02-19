@@ -3,7 +3,7 @@
   hostname:
     name: '{{ uc_short_hostname }}.{{ domain }}'
 
-- name: 'Set the root password for the system'
+- name: 'Set the root password for the system.'
   user:
     name: root
     password: '{{ root_pass }}'
@@ -15,17 +15,15 @@
     name: '{{ sudo_group }}'
     state: present
 
-- name: 'Set the base users.'
+- name: 'Configure the stack user.'
   user: 
-    name: '{{ item.user_name }}'
-    uid: '{{ item.uid }}'
+    name: '{{ uc_user }}'
     groups: '{{ sudo_group }}'
     append: yes
     shell: /bin/bash
-    password: '{{ user_pass }}'
+    password: '{{ uc_user_pass }}'
     update_password: always
     state: present 
-  loop: '{{ user_list }}'
 
 - name: 'Ensure /etc/sudoers.d directory exists' 
   file: 
@@ -43,7 +41,7 @@
      group: root
      mode: 0440
 
-- name: 'Configure hosts file'
+- name: 'Configure hosts file.'
   lineinfile:
     path: /etc/hosts
     backup: true

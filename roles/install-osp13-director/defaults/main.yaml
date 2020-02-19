@@ -2,20 +2,17 @@
 # default  vars file for install-director
 domain: voltron.xyz
 
-sudo_group: wheel
-
 time_servers:
    - clock.nyc.he.net
    - clock.fmt.he.net
    - clock.sjc.he.net
 
-user_list:
-  - { user_name: stack, uid: 1001, groups: '{{ sudo_group }}' } 
-
+sudo_group: wheel
 uc_short_hostname: osp-dir
 uc_user: stack
 uc_group: stack
 uc_home_path: /home/stack
+
 uc_dirs:
   - overcloud_images
   - templates

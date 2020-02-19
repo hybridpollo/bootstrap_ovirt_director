@@ -7,10 +7,6 @@
   tags:
     - sat_install
 
-- name: 'Clean any lingering registration details from previous attempts.'
-  shell: > 
-    subscription-manager clean
-
 - name: 'Install katello consumer CA on host [If not registered].'
   yum:
     name: '{{ katello_rpm_url }}'
