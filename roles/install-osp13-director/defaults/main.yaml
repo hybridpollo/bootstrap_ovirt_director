@@ -74,7 +74,7 @@ undercloud_dhcp_inspection_start: 172.16.24.100
 undercloud_dhcp_inspection_end: 172.16.24.120
 undercloud_dhcp_gateway: 172.16.24.1
 undercloud_name_servers:
-  - 10.10.11.3
+  - 172.25.48.3
   - 8.8.8.8
 undercloud_time_servers:
    - clock.nyc.he.net

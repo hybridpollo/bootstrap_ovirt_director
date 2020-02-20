@@ -32,7 +32,7 @@ ovirt_vnic_boot_protocol: static
 ovirt_vnic_ip: 172.25.48.40
 ovirt_vnic_netmask: 255.255.254.0
 ovirt_vnic_gateway: 172.25.48.1
-ovirt_vm_dns_servers: "10.10.11.3 8.8.8.8"
+ovirt_vm_dns_servers: "172.25.48.3 8.8.8.8"
 ovirt_vm_dns_search: '{{ vm_domain }}'
 
 # secondary nic
