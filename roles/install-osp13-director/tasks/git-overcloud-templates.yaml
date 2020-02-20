@@ -41,15 +41,3 @@
   become: yes
   become_user: stack
   tags: undercloud_config
-
-#- name: 'Configure the undercloud.conf for OSP 13 from a template.'
-#  template:
-#  register: uc_generated
-#  tags: undercloud_config
-
-
-#- name: 'Begin with the Undercloud installation.'
-#  template:
-#  when uc_generated succeeds
-#  tags: undercloud_config
-

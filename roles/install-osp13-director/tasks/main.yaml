@@ -5,4 +5,4 @@
 - include: system-updates.yaml
 - include: base-services.yaml
 - include: undercloud-install.yaml
-#- include: git-overcloud-templates.yaml
+- include: git-overcloud-templates.yaml

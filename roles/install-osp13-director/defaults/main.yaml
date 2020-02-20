@@ -26,6 +26,7 @@ uc_rpm_packages:
   - tmux
   - vim-enhanced
   - ceph-ansible
+  - python-ovirt-engine-sdk4
 
 # rhn activation name and key are vaulted
 # vault/vars/director-vars.yaml
