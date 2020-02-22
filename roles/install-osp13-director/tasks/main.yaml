@@ -4,5 +4,5 @@
 - include: satellite-register.yaml
 - include: system-updates.yaml
 - include: base-services.yaml
+- include: undercloud-prepare.yaml
 - include: undercloud-install.yaml
-- include: git-overcloud-templates.yaml
