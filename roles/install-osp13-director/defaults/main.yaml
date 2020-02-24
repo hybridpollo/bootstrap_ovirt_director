@@ -43,9 +43,8 @@ rhn_rpm_repos:
   - rhel-7-server-rhceph-3-tools-rpms
 
 # List of ssh keys are used to bootstrap git
-github_ssh_keys:
-  - /home/ariveral/.ssh/id_rsa
-  - /home/ariveral/.ssh/id_rsa.pub
+github_ssh_priv_key: /home/ariveral/.ssh/id_rsa
+github_ssh_pub_key: /home/ariveral/.ssh/id_rsa.pub
 
 # Git repository to clone
 osp_templates_repo: git@github.com:hybridpollo/osp_templates.git
