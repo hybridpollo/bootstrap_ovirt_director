@@ -4,6 +4,7 @@
   vars: 
     vm_domain: voltron.xyz
     ovirt_vm_name: 'osp-dir.{{ vm_domain }}'
+    virt_vm_cpu: 8
   vars_files:
     - vault/vars/ovirt-vars.yaml
   roles:
