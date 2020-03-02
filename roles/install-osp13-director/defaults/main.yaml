@@ -1,5 +1,7 @@
 ---
 # default  vars file for install-director
+# These can be overwritten by variables set
+# on the playbook configure-director.yaml
 domain: voltron.xyz
 
 time_servers:
@@ -25,7 +27,6 @@ uc_rpm_packages:
   - bind-utils
   - tmux
   - vim-enhanced
-  - ceph-ansible
   - python-ovirt-engine-sdk4
 
 # rhn activation name and key are vaulted
@@ -40,7 +41,6 @@ rhn_rpm_repos:
   - rhel-7-server-satellite-tools-6.3-rpms
   - rhel-ha-for-rhel-7-server-rpms
   - rhel-7-server-openstack-13-rpms
-  - rhel-7-server-rhceph-3-tools-rpms
 
 # List of ssh keys are used to bootstrap git
 github_ssh_priv_key: /home/ariveral/.ssh/id_rsa
@@ -56,7 +56,7 @@ osp_templates_branch: osp13_hci
 # please review the default file 
 # /usr/share/instack-undercloud/undercloud.conf.sample 
 # for all available parameters
-overcloud_domain: voltron.xyz
+overcloud_domain: arl.lab
 undercloud_local_interface: eth1
 undercloud_local_mtu: 1500
 undercloud_enable_uefi: false

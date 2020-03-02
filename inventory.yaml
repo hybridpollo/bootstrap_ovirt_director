@@ -4,10 +4,10 @@ deploy_vm:
     localhost:
       ansible_connection: local
   vars:
-    ansible_python_interpreter: /home/ariveral/venvs/ansible_workspace/bin/python
+    ansible_python_interpreter: /home/arlaporte/ansible_workspace/bin/python
 
 undercloud:
   hosts:
-    osp-dir.voltron.xyz:
+    osp-dir.arl.lab:
       ansible_user: root
-      ansible_host: 172.25.48.40
+      ansible_host: 172.25.48.10
