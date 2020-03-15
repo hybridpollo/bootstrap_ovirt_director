@@ -1,7 +1,9 @@
 ---
-- name: '[STARTING Playbook] Deploying the Undercloud VM'
+- name: 'Deploying the director virtual machine hosted in ovirt'
   import_playbook: deploy-director-vm.yaml
-
-- name: '[STARTING Playbook] Configuring the basic Undercloud Software'
+  tags:
+    - create_vm
+- name: 'Deploying the director software on deployed vm'
   import_playbook: configure-director.yaml
-
+  tags:
+    - create_vm

@@ -1,0 +1,39 @@
+---
+- name: Check for the existence of the /home/stack/ipa_otp file
+  stat:
+    path: '{{ uc_home_path }}/ipa_otp'
+  register: otp_file
+  tags: undercloud_install
+
+- name: 'Generate the OTP password used for nova join and TLS everywhere'
+  shell: >
+    /usr/libexec/novajoin-ipa-setup \
+    --principal admin \
+    --password '{{ idm_password }}' \
+    --server '{{ idm_server }}' \
+    --realm '{{ idm_domain|upper }}' \
+    --domain '{{ idm_domain }}' \
+    --hostname '{{ uc_short_hostname}}.{{ domain }}' \
+    --precreate | tee '{{ uc_home_path }}/ipa_otp'
+  when: otp_file.stat.exists == False
+  register: otp
+  become: yes
+  become_user: stack
+  tags: undercloud_install
+
+- name: 'Update the ipa_otp variable in /home/stack/undercloud.conf'
+  lineinfile:
+    path: '{{ uc_home_path }}/undercloud.conf'
+    regexp: '^.*ipa_otp.*'
+    line: 'ipa_otp = {{ otp.stdout }}'
+  when: otp.changed
+  tags: undercloud_install
+
+- name: 'Perform the undercloud installation'
+  shell: >
+    openstack undercloud install
+  args:
+    chdir: /home/stack
+  become: yes
+  become_user: stack
+  tags: undercloud_install

@@ -1,9 +1,14 @@
 ---
-- name:  'Deploying virtual machine {{ ovirt_vm_name }}'
-  hosts: deploy_vm
-  vars: 
-    vm_domain: voltron.xyz
-    ovirt_vm_name: 'osp-dir.{{ vm_domain }}'
+- name: '[STARTING Playbook] Deploying the Undercloud VM'
+  hosts: localhost
+  vars:
+    vm_domain: arl.lab
+    ovirt_vm_name: 'osp16-dir.{{ vm_domain }}'
+    ovirt_vm_cpu: 4
+    ovirt_vm_ram: 16Gib
+    ovirt_vnic_ip: 172.25.48.10
+    ovirt_vm_ram_guaranteed: 16Gib
+    ovirt_vm_disk_size: 200Gib
   vars_files:
     - vault/vars/ovirt-vars.yaml
   roles:

@@ -32,24 +32,22 @@
      ssh-keyscan -H github.com >> /home/stack/.ssh/known_hosts
   tags: undercloud_config
     
-- name: 'Clone the git repository containtaing the RHOSP 13 templates in to /home/stack'
+- name: 'Clone the git repository containtaing the OSP16 templates in to /home/stack'
   git:
     repo: '{{ osp_templates_repo }}'
     version: '{{ osp_templates_branch }}'
-    dest: /home/stack/templates
+    dest: /home/stack/osp16_templates
     clone: yes
   become: yes
   become_user: stack
   tags: undercloud_config
 
-#- name: 'Configure the undercloud.conf for OSP 13 from a template.'
-#  template:
-#  register: uc_generated
-#  tags: undercloud_config
-
-
-#- name: 'Begin with the Undercloud installation.'
-#  template:
-#  when uc_generated succeeds
-#  tags: undercloud_config
+- name: 'Copy the undercloud.conf from the fetched git repository'
+  copy:
+    remote_src: yes
+    src: '{{ uc_home_path }}/osp16_templates/undercloud.conf'
+    dest: '{{ uc_home_path }}/undercloud.conf'
+    owner: '{{ uc_user }}'
+    group: '{{ uc_group }}'
+  tags: undercloud_config
 

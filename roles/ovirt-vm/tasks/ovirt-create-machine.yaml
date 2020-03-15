@@ -1,5 +1,5 @@
 ---
-- name: 'Obtain SSO token using username/password credentials'
+- name: 'Obtain SSO token using username/password credentials.'
   ovirt_auth:
     url: '{{ ovirt_url }}'
     username: '{{ ovirt_username }}'
@@ -38,7 +38,7 @@
   tags: 
     - create_vm
 
-- name: 'Deleting virtual machine: {{ ovirt_vm_name }}'
+- name: 'Deleting virtual machine: {{ ovirt_vm_name }} [If play is tagged with delete_vm].'
   ovirt_vm:
     auth: '{{ ovirt_auth }}'
     name: '{{ ovirt_vm_name }}'
@@ -60,7 +60,7 @@
   tags:
     - create_vm
 
-- name: "Change disk size of {{ ovirt_vm_name }} to desired size {{ ovirt_vm_disk_size }}"
+- name: "Change disk size of {{ ovirt_vm_name }} to desired size: {{ ovirt_vm_disk_size }}."
   ovirt_disk:
     auth: '{{ ovirt_auth }}'
     vm_name: '{{ ovirt_vm_name }}'
@@ -71,7 +71,7 @@
   tags:
     - create_vm
 
-- name: "Attaching primary vnic from {{ ovirt_vnic_extra_net_name }} to {{ ovirt_vm_name }}"
+- name: "Attaching primary vnic from {{ ovirt_vnic_net_name }} to {{ ovirt_vm_name }}."
   ovirt_nic:
     auth: '{{ ovirt_auth }}'
     vm: '{{ ovirt_vm_name }}'
@@ -95,7 +95,7 @@
   tags:
     - create_vm
 
-- name: "Pause for 10 seconds before booting machine"
+- name: "Pausing for 10 seconds before booting machine."
   pause:
     seconds: 10
   tags:
@@ -110,9 +110,9 @@
   tags:
     - create_vm
 
-- name: "Waiting for 30 seconds to allow for virtual machine to fully boot."
+- name: "Waiting for 10 seconds to allow for virtual machine to fully boot."
   pause:
-    seconds: 30
+    seconds: 10
   tags:
     - create_vm
 

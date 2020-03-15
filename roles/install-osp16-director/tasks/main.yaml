@@ -1,0 +1,9 @@
+---
+# tasks file for install-osp16-director
+- include: base-system.yaml 
+- include: satellite-register.yaml
+- include: system-updates.yaml
+- include: base-services.yaml
+- include: undercloud-prepare.yaml
+#- include: fetch-git-templates.yaml
+#- include: install-undercloud.yaml

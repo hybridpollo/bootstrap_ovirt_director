@@ -1,0 +1,13 @@
+---
+deploy_vm:
+  hosts:
+    localhost:
+      ansible_connection: local
+  vars:
+    ansible_python_interpreter: /home/arlaporte/virtual_environments/ansible_osp_ws/bin/python3
+
+director:
+  hosts:
+    osp16-dir.arl.lab:
+      ansible_user: root
+      ansible_host: 172.25.48.10

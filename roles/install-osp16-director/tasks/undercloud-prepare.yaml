@@ -1,0 +1,156 @@
+---
+- name: '[If Enabled ] Activating the pki-deps module to install the python3-nss package.'
+  shell: >
+     yum module enable -y pki-deps
+  retries: 10
+  when: enable_tls_everywhere == True
+  args:
+    warn: false
+  tags: 
+    - undercloud_config
+
+- name: '[If Enabled ] Installing TLS-Everywhere rpm dependencies.'
+  yum:
+    name: '{{ tls_everywhere_rpm_deps }}'
+    state: installed
+    update_cache: yes
+  register: result
+  when: enable_tls_everywhere == True
+  until: result is succeeded
+  retries: 10
+  delay: 5
+  tags: 
+    - undercloud_config
+
+- name: 'Installing tripleo | undercloud packages.'
+  yum:
+    name: '{{ uc_rpm_packages }}'
+    state: installed
+    update_cache: yes
+  register: result
+  until: result is succeeded
+  retries: 10
+  delay: 5
+  tags: 
+    - undercloud_config
+
+- name: 'Configuring the undercloud.conf from template.'
+  template:
+    src: undercloud.conf.j2
+    dest: '{{ uc_home_path }}/undercloud.conf'
+    owner: stack
+    group: stack
+    mode: 0644
+  register: config_gen
+  tags: 
+    - undercloud_config
+
+- name: 'Create templates and image directories in {{ uc_home_path }}.'
+  file:
+    path: '{{ uc_home_path }}/{{ item }}'
+    owner: '{{ uc_user }}'
+    group: '{{ uc_group }}'
+    mode: 0755
+    state: directory
+  loop:
+    '{{ uc_dirs }}'
+  tags: 
+    - undercloud_config
+
+- name: 'Ensure the {{ uc_home_path }}/.ssh directory exists.'
+  file:
+    path: '{{ uc_home_path }}/.ssh'
+    state: directory
+    owner: '{{ uc_user }}'
+    group: '{{ uc_user }}'
+    mode: 0744
+  tags: 
+    - undercloud_config
+   
+- name: 'Copy github keys to {{ uc_home_path }}/.ssh.'
+  copy:
+    src: '{{ item }}'
+    dest: '{{ uc_home_path }}/.ssh' 
+    owner: '{{ uc_user }}'
+    group: '{{ uc_user }}'
+    mode: 0600
+  when: enable_git_clone == True
+  loop: 
+    - '{{ github_ssh_priv_key }}'
+    - '{{ github_ssh_pub_key }}'
+  tags: 
+    - undercloud_config
+
+- name: 'Ensure github.com is part of the authorized hosts'
+  shell: > 
+     ssh-keyscan -H github.com >> /home/stack/.ssh/known_hosts
+  when: enable_git_clone == True
+  tags: 
+    - undercloud_config
+    
+- name:  Create the git temporary directory with the right permissions
+  file:
+    path: '{{ uc_home_path }}/.ansible/tmp'
+    mode: 0755
+    owner: '{{ uc_user }}'
+    group: '{{ uc_user }}'
+    state: directory
+  when: enable_git_clone == True
+  tags:
+    - undercloud_config
+
+- name: 'Clone git repository for  RHOSP 16 templates in to {{ uc_home_path }}/templates.'
+  git:
+    repo: '{{ osp_templates_repo }}'
+    version: '{{ osp_templates_branch }}'
+    dest: '{{ uc_home_path }}/templates'
+    clone: yes
+    accept_hostkey: yes
+  become: yes
+  become_user: stack
+  when: enable_git_clone == True
+  tags:
+    - undercloud_config
+
+- name: 'Check for the existence of the {{ uc_home_path }}/ipa_otp file prior to generation.'
+  stat:
+    path: '{{ uc_home_path }}/ipa_otp'
+  when: enable_tls_everywhere == True
+  register: otp_file
+  tags: undercloud_config
+
+- name: 'Halt the installation if the file {{ uc_home_path }}/ipa_otp exists.'
+  fail:
+    msg: 'WARNING: File: {{ uc_home_path }}/ipa_otp exists. This host may have already join the IDM Domain. Manual intervention suggested.'
+  when:
+    - enable_tls_everywhere == True
+    - otp_file.stat.exists == True
+  tags: undercloud_config
+
+- name: 'Generate the OTP password used for novajoin and TLS everywhere'
+  shell: >
+    /usr/libexec/novajoin-ipa-setup \
+    --principal admin \
+    --password '{{ idm_password }}' \
+    --server '{{ idm_server }}' \
+    --realm '{{ idm_domain|upper }}' \
+    --domain '{{ idm_domain }}' \
+    --hostname '{{ uc_short_hostname}}.{{ domain }}' \
+    --precreate | tee '{{ uc_home_path }}/ipa_otp'
+  when: 
+    - enable_tls_everywhere == True
+    - otp_file.stat.exists == False
+  register: otp
+  become: yes
+  become_user: stack
+  tags: undercloud_config
+
+- name: 'Update the ipa_otp variable in /home/stack/undercloud.conf'
+  lineinfile:
+    path: '{{ uc_home_path }}/undercloud.conf'
+    regexp: '^.*ipa_otp.*'
+    line: 'ipa_otp = {{ otp.stdout }}'
+  when: 
+    - enable_tls_everywhere == True
+    - otp_file.stat.exists == False
+  tags: undercloud_config

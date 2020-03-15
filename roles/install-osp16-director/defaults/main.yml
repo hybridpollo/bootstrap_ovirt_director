@@ -1,0 +1,114 @@
+---
+# default  vars file for install-osp16-director
+domain: arl.lab
+
+sudo_group: wheel
+
+time_servers:
+   - clock.nyc.he.net
+   - clock.fmt.he.net
+
+user_list:
+  - { user_name: stack, uid: 1001, groups: '{{ sudo_group }}' } 
+
+uc_short_hostname: osp16-dir
+uc_user: stack
+uc_group: stack
+uc_home_path: /home/stack
+uc_dirs:
+  - overcloud_images
+
+uc_rpm_packages:
+  - python3-tripleoclient
+  - rhosp-director-images
+  - rhosp-director-images-ipa
+  - git
+  - bind-utils
+  - vim-enhanced
+  - tmux
+  - katello-agent
+
+tenant_image_url:
+  - 'https://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.img'
+  - 'https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.qcow2'
+
+# rhn activation name and key are vaulted
+# vault/vars/director-vars.yaml
+satellite_host: satellite.infra.arl.lab
+katello_rpm_url: 'http://{{ satellite_host }}/pub/katello-ca-consumer-latest.noarch.rpm'
+
+rhn_rpm_repos:
+  - rhel-8-for-x86_64-baseos-rpms 
+  - rhel-8-for-x86_64-appstream-rpms 
+  - rhel-8-for-x86_64-highavailability-rpms 
+  - ansible-2.8-for-rhel-8-x86_64-rpms 
+  - openstack-16-for-rhel-8-x86_64-rpms
+  - satellite-tools-6.5-for-rhel-8-x86_64-rpms
+  - fast-datapath-for-rhel-8-x86_64-rpms
+
+# List of ssh keys are used to bootstrap git when enabled
+enable_git_clone: false
+github_ssh_keys:
+  - /home/arlaporte/.ssh/id_rsa
+  - /home/arlaporte/.ssh/id_rsa.pub
+
+# Git repository to clone
+osp_templates_repo: git@github.com:hybridpollo/osp_templates.git
+osp_templates_branch: osp16_home_lab
+
+# variables used for nova join
+enable_tls_everywhere: true
+idm_domain: voltron.xyz
+idm_server: 'idm.{{ idm_domain }}'
+tls_everywhere_rpm_deps:
+  - python3-nss
+  - python3-novajoin
+
+# undercloud.conf parameters
+# these variables below are used to configure the undercloud.conf
+# not every variable is parametrized
+# please review the default file 
+# /usr/share/instack-undercloud/undercloud.conf.sample 
+# for all available parameters
+# overcloud domain if different from {{ domain}}
+overcloud_domain: arl.lab
+undercloud_local_interface: eth1
+undercloud_local_mtu: 1500
+undercloud_enable_uefi: false
+undercloud_enable_debug: false
+undercloud_enable_telemetry: False
+undercloud_enable_tempest: false
+undercloud_enable_ui: false
+undercloud_enable_clean_nodes: true
+undercloud_enable_clean_up: true
+undercloud_enable_selinux: true
+undercloud_enable_ipxe: True
+undercloud_enable_inspection_extras: True
+undercloud_container_cli: podman
+undercloud_container_images_file: '{{ uc_home_path }}/container_images.yaml'
+undercloud_custom_environment_file: '{{ uc_home_path }}/undercloud_custom_env.yaml'
+undercloud_inspection_interface: br-ctlplane
+undercloud_local_subnet: ctlplane-subnet
+undercloud_local_ip: 172.16.24.2/24
+undercloud_public_vip: 172.16.24.3
+undercloud_admin_vip: 172.16.24.4
+undercloud_provisioning_cidr: 172.16.24.0/24
+undercloud_dhcp_provisioning_start: 172.16.24.5
+undercloud_dhcp_provisioning_end: 172.16.24.24
+undercloud_dhcp_inspection_start: 172.16.24.100
+undercloud_dhcp_inspection_end: 172.16.24.120
+undercloud_dhcp_gateway: 172.16.24.1
+undercloud_enable_masquerade: False
+undercloud_name_servers:
+  - 172.25.48.3
+  - 8.8.8.8
+undercloud_time_servers:
+   - clock.nyc.he.net
+   - clock.fmt.he.net
+undercloud_enable_routed_networks: False
+undercloud_routed_subnets_list:
+  - ctlplane-subnet
+undercloud_enabled_hardware_types:
+  - staging-ovirt
+  - ilo
+  - ipmi
