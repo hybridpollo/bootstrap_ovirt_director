@@ -28,10 +28,6 @@ uc_rpm_packages:
   - tmux
   - katello-agent
 
-tenant_image_url:
-  - 'https://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.img'
-  - 'https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.qcow2'
-
 # rhn activation name and key are vaulted
 # vault/vars/director-vars.yaml
 satellite_host: satellite.infra.arl.lab
@@ -57,7 +53,7 @@ osp_templates_repo: git@github.com:hybridpollo/osp_templates.git
 osp_templates_branch: osp16_home_lab
 
 # variables used for nova join
-enable_tls_everywhere: true
+enable_tls_everywhere: false
 idm_domain: voltron.xyz
 idm_server: 'idm.{{ idm_domain }}'
 tls_everywhere_rpm_deps:
