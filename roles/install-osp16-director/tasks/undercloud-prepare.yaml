@@ -47,7 +47,7 @@
 - name: 'Configuring the container image preparation file from template.'
   template:
     src: container_image_prepare.yaml.j2
-    dest: '{{ uc_home_path }}/container_image_prepare.yaml
+    dest: '{{ uc_home_path }}/container_image_prepare.yaml'
     owner: stack
     group: stack
     mode: 0644
@@ -57,7 +57,7 @@
 - name: 'Configuring the undercloud custom parameters file from template.'
   template:
     src: undercloud_custom_env.yaml.j2
-    dest: '{{ uc_home_path }}/undercloud_custom_env.yaml
+    dest: '{{ uc_home_path }}/undercloud_custom_env.yaml'
     owner: stack
     group: stack
     mode: 0644
@@ -107,7 +107,7 @@
   tags: 
     - undercloud_config
     
-- name:  Create the git temporary directory with the right permissions
+- name:  'Create the git temporary directory with the right permissions'
   file:
     path: '{{ uc_home_path }}/.ansible/tmp'
     mode: 0755

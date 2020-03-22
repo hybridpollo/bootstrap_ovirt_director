@@ -7,4 +7,4 @@
 - include: undercloud-prepare.yaml
 - include: fetch-git-templates.yaml
   when: enable_git_clone == True
-- include: install-undercloud.yaml
+- include: undercloud-install.yaml
