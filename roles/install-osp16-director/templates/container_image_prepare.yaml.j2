@@ -1,0 +1,19 @@
+# {{ ansible_managed }}
+# openstack tripleo container image prepare default --local-push-destination --output-env-file containers-prepare-parameter.yaml
+#
+
+parameter_defaults:
+  ContainerImagePrepare:
+  - push_destination: {{ undercloud_container_registry_address }}
+    set:
+      name_prefix: openstack-
+      name_suffix: ''
+      namespace: registry.redhat.io/rhosp-rhel8
+      neutron_driver: ovn
+      rhel_containers: false
+      tag: '16.0'
+    tag_from_label: '{version}-{release}'
+  ContainerImageRegistryLogin: true
+  ContainerImageRegistryCredentials:
+    registry.redhat.io:
+      {{ container_registry_username }}: {{ container_registry_password }} 

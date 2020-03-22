@@ -41,7 +41,26 @@
     owner: stack
     group: stack
     mode: 0644
-  register: config_gen
+  tags: 
+    - undercloud_config
+
+- name: 'Configuring the container image preparation file from template.'
+  template:
+    src: container_image_prepare.yaml.j2
+    dest: '{{ uc_home_path }}/container_image_prepare.yaml
+    owner: stack
+    group: stack
+    mode: 0644
+  tags: 
+    - undercloud_config
+
+- name: 'Configuring the undercloud custom parameters file from template.'
+  template:
+    src: undercloud_custom_env.yaml.j2
+    dest: '{{ uc_home_path }}/undercloud_custom_env.yaml
+    owner: stack
+    group: stack
+    mode: 0644
   tags: 
     - undercloud_config
 
@@ -99,7 +118,7 @@
   tags:
     - undercloud_config
 
-- name: 'Clone git repository for  RHOSP 16 templates in to {{ uc_home_path }}/templates.'
+- name: 'Clone git repository for RHOSP 16 templates in to {{ uc_home_path }}/templates.'
   git:
     repo: '{{ osp_templates_repo }}'
     version: '{{ osp_templates_branch }}'
@@ -152,5 +171,5 @@
     line: 'ipa_otp = {{ otp.stdout }}'
   when: 
     - enable_tls_everywhere == True
-    - otp_file.stat.exists == False
+    - otp_file.stat.exists == False or otp.changed
   tags: undercloud_config

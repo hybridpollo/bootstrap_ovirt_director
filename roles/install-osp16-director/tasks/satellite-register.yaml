@@ -54,3 +54,12 @@
   delay: 5
   tags:
     - sat_install
+
+- name: 'Install the Katello agent on host.'
+  yum:
+    name: katello-agent
+    state: present
+  retries: 10
+  delay: 5
+  tags:
+    - sat_install
