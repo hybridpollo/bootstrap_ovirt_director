@@ -56,8 +56,6 @@ osp_templates_branch: osp16_home_lab
 enable_tls_everywhere: false
 idm_domain: voltron.xyz
 idm_server: 'idm.{{ idm_domain }}'
-undercloud_public_vip: 172.16.24.3
-undercloud_admin_vip: 172.16.24.4
 tls_everywhere_rpm_deps:
   - python3-nss
   - python3-novajoin
@@ -83,11 +81,13 @@ undercloud_enable_selinux: true
 undercloud_enable_ipxe: True
 undercloud_enable_inspection_extras: True
 undercloud_container_cli: podman
-undercloud_container_images_file: '{{ uc_home_path }}/container_images.yaml'
+undercloud_container_images_file: '{{ uc_home_path }}/container_image_prepare.yaml'
 undercloud_custom_environment_file: '{{ uc_home_path }}/undercloud_custom_env.yaml'
 undercloud_inspection_interface: br-ctlplane
 undercloud_local_subnet: ctlplane-subnet
 undercloud_local_ip: 172.16.24.2/24
+undercloud_public_vip: 172.16.24.3
+undercloud_admin_vip: 172.16.24.4
 undercloud_provisioning_cidr: 172.16.24.0/24
 undercloud_dhcp_provisioning_start: 172.16.24.5
 undercloud_dhcp_provisioning_end: 172.16.24.24

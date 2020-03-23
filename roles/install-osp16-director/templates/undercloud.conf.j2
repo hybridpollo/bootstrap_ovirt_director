@@ -159,7 +159,7 @@ certificate_generation_ca = local
 generate_service_certificate = true
 {% else %}
 #certificate_generation_ca = local
-#generate_service_certificate = true
+generate_service_certificate = false
 {% endif %}
 
 # URL for the heat container image to use. (string value)
@@ -310,11 +310,7 @@ subnets = {{ undercloud_routed_subnets_list | join(',') }}
 # Virtual IP or DNS address to use for the admin endpoints of
 # Undercloud services. Only used with SSL. (string value)
 # Deprecated group/name - [DEFAULT]/undercloud_admin_vip
-{% if enable_tls_everywhere is sameas true %}
 undercloud_admin_host = {{ undercloud_admin_vip }}
-{% else %}
-#undercloud_admin_host = 
-{% endif %}
 
 # Whether to enable the debug log level for Undercloud OpenStack
 # services and Container Image Prepare step. (boolean value)
@@ -356,12 +352,7 @@ undercloud_ntp_servers = {{ undercloud_time_servers|join(',') }}
 # Virtual IP or DNS address to use for the public endpoints of
 # Undercloud services. Only used with SSL. (string value)
 # Deprecated group/name - [DEFAULT]/undercloud_public_vip
-
-{% if enable_tls_everywhere is sameas true %}
 undercloud_public_host = {{ undercloud_public_vip }}
-{% else %}
-#undercloud_public_host = 
-{% endif %}
 
 # Certificate file to use for OpenStack service SSL connections.
 # Setting this enables SSL for the OpenStack API endpoints, leaving it
