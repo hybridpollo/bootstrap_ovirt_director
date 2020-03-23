@@ -43,9 +43,8 @@ rhn_rpm_repos:
 
 # List of ssh keys are used to bootstrap git when enabled
 enable_git_clone: false
-github_ssh_keys:
-  - /home/arlaporte/.ssh/id_rsa
-  - /home/arlaporte/.ssh/id_rsa.pub
+github_ssh_priv_key: /home/arlaporte/.ssh/id_rsa
+github_ssh_pub_key: /home/arlaporte/.ssh/id_rsa.pub
 
 # Git repository to clone
 osp_templates_repo: git@github.com:hybridpollo/osp_templates.git
