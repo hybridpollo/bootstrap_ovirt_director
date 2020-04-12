@@ -8,6 +8,6 @@ deploy_vm:
 
 director:
   hosts:
-    osp16-dir.arl.lab:
+    osp16-dir.voltron.xyz:
       ansible_user: root
       ansible_host: 172.25.48.10

@@ -1,6 +1,6 @@
 ---
 # default  vars file for install-osp16-director
-domain: arl.lab
+domain: voltron.xyz
 
 sudo_group: wheel
 
@@ -42,7 +42,7 @@ rhn_rpm_repos:
   - fast-datapath-for-rhel-8-x86_64-rpms
 
 # List of ssh keys are used to bootstrap git when enabled
-enable_git_clone: false
+enable_git_clone: true
 github_ssh_priv_key: /home/arlaporte/.ssh/id_rsa
 github_ssh_pub_key: /home/arlaporte/.ssh/id_rsa.pub
 
@@ -52,7 +52,7 @@ osp_templates_branch: osp16_home_lab
 
 # variables used for nova join
 # and tls everywhere
-enable_tls_everywhere: false
+enable_tls_everywhere: true
 idm_domain: voltron.xyz
 idm_server: 'idm.{{ idm_domain }}'
 tls_everywhere_rpm_deps:
@@ -66,7 +66,7 @@ tls_everywhere_rpm_deps:
 # /usr/share/instack-undercloud/undercloud.conf.sample 
 # for all available parameters
 # overcloud domain if different from {{ domain}}
-overcloud_domain: arl.lab
+overcloud_domain: voltron.xyz
 undercloud_local_interface: eth1
 undercloud_local_mtu: 1500
 undercloud_enable_uefi: false
