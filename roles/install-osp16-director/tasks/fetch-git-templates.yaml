@@ -31,11 +31,11 @@
   tags:
     - fetch_git_templates
 
-- name: 'Clone git repository for RHOSP 16 templates in to {{ uc_home_path }}/templates.'
+- name: 'Clone git repository for RHOSP 16 templates in to {{ uc_home_path }}/overcloud_deployment.'
   git:
     repo: '{{ osp_templates_repo }}'
     version: '{{ osp_templates_branch }}'
-    dest: '{{ uc_home_path }}/templates'
+    dest: '{{ uc_home_path }}/overcloud_deployment'
     clone: yes
     accept_hostkey: yes
   become: yes

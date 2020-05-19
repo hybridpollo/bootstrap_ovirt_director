@@ -31,11 +31,11 @@ uc_rpm_packages:
 # vault/vars/director-vars.yaml
 satellite_host: satellite.infra.arl.lab
 katello_rpm_url: 'http://{{ satellite_host }}/pub/katello-ca-consumer-latest.noarch.rpm'
-
+rhn_sys_release_version: '8.1'
 rhn_rpm_repos:
-  - rhel-8-for-x86_64-baseos-rpms 
+  - rhel-8-for-x86_64-baseos-eus-rpms
   - rhel-8-for-x86_64-appstream-rpms 
-  - rhel-8-for-x86_64-highavailability-rpms 
+  - rhel-8-for-x86_64-highavailability-eus-rpms
   - ansible-2.8-for-rhel-8-x86_64-rpms 
   - openstack-16-for-rhel-8-x86_64-rpms
   - satellite-tools-6.5-for-rhel-8-x86_64-rpms
@@ -43,8 +43,8 @@ rhn_rpm_repos:
 
 # List of ssh keys are used to bootstrap git when enabled
 enable_git_clone: true
-github_ssh_priv_key: /home/arlaporte/.ssh/id_rsa
-github_ssh_pub_key: /home/arlaporte/.ssh/id_rsa.pub
+github_ssh_priv_key: /home/ariveral/.ssh/id_rsa
+github_ssh_pub_key: /home/ariveral/.ssh/id_rsa.pub
 
 # Git repository to clone
 osp_templates_repo: git@github.com:hybridpollo/osp_templates.git
@@ -66,19 +66,19 @@ tls_everywhere_rpm_deps:
 # /usr/share/instack-undercloud/undercloud.conf.sample 
 # for all available parameters
 # overcloud domain if different from {{ domain}}
-overcloud_domain: voltron.xyz
+overcloud_domain: '{{ domain }}'
 undercloud_local_interface: eth1
 undercloud_local_mtu: 1500
 undercloud_enable_uefi: false
 undercloud_enable_debug: false
-undercloud_enable_telemetry: False
+undercloud_enable_telemetry: false
 undercloud_enable_tempest: false
 undercloud_enable_ui: false
 undercloud_enable_clean_nodes: true
 undercloud_enable_clean_up: true
 undercloud_enable_selinux: true
-undercloud_enable_ipxe: True
-undercloud_enable_inspection_extras: True
+undercloud_enable_ipxe: true
+undercloud_enable_inspection_extras: true
 undercloud_container_cli: podman
 undercloud_container_images_file: '{{ uc_home_path }}/container_image_prepare.yaml'
 undercloud_custom_environment_file: '{{ uc_home_path }}/undercloud_custom_env.yaml'
@@ -93,14 +93,14 @@ undercloud_dhcp_provisioning_end: 172.16.24.24
 undercloud_dhcp_inspection_start: 172.16.24.100
 undercloud_dhcp_inspection_end: 172.16.24.120
 undercloud_dhcp_gateway: 172.16.24.1
-undercloud_enable_masquerade: False
+undercloud_enable_masquerade: false
 undercloud_name_servers:
   - 172.25.48.3
   - 8.8.8.8
 undercloud_time_servers:
    - clock.nyc.he.net
    - clock.fmt.he.net
-undercloud_enable_routed_networks: False
+undercloud_enable_routed_networks: false
 undercloud_routed_subnets_list:
   - ctlplane-subnet
 undercloud_enabled_hardware_types:

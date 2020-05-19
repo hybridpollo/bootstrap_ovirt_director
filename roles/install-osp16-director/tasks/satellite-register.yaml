@@ -26,6 +26,7 @@
     activationkey: '{{ rhn_activation_key }}'
     state: present
     force_register: yes
+    release: '{{ rhn_sys_release_version | default(8) }}'
   when: "'Unknown' in reg_status.stdout"
   register: sat_registration
   until: sat_registration is succeeded
@@ -33,6 +34,7 @@
   delay: 5
   tags:
     - sat_install
+
 
 - name: 'Disable all repositories not required.'
   rhsm_repository:
