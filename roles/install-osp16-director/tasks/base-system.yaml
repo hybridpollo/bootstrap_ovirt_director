@@ -43,9 +43,3 @@
      group: root
      mode: 0440
 
-- name: 'Configure hosts file'
-  lineinfile:
-    path: /etc/hosts
-    backup: true
-    regexp: '^127\.0\.0\.1'
-    line: '127.0.0.1   {{ uc_short_hostname }}.{{ domain}} localhost localhost.localdomain localhost4 localhost4.localdomain4'
