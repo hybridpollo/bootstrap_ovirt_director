@@ -50,12 +50,12 @@
     - delete_vm
   delegate_to: localhost
 
-- name: 'Retrieving facts for disk sizing and nic allocation'
+- name: "Retrieving facts for disk sizing and nic allocation."
   ovirt_vm_info:
     auth: '{{ ovirt_auth }}'
     pattern: 'name={{ ovirt_vm_name }}'
     fetch_nested: true
-    nested_attributes: disk
+    all_content: true
   register: vmfacts
   tags:
     - create_vm
@@ -65,9 +65,9 @@
     auth: '{{ ovirt_auth }}'
     vm_name: '{{ ovirt_vm_name }}'
     size: '{{ ovirt_vm_disk_size }}'
-    id: '{{ vmfacts.ovirt_vms[0].disk_attachments[0].disk.id }}'
+    id: '{{ vmfacts.ovirt_vms[0].disk_attachments[0].id }}'
     state: attached
-  when: vmfacts.ovirt_vms[0].disk_attachments[0].disk.id is defined and vmfacts.ovirt_vms[0].status is defined
+  when: vmfacts.ovirt_vms[0].disk_attachments[0].id is defined and vmfacts.ovirt_vms[0].status is defined
   tags:
     - create_vm
 
