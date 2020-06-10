@@ -29,7 +29,7 @@ uc_rpm_packages:
 
 # rhn activation name and key are vaulted
 # vault/vars/director-vars.yaml
-satellite_host: satellite.infra.arl.lab
+satellite_host: satellite.voltron.xyz
 katello_rpm_url: 'http://{{ satellite_host }}/pub/katello-ca-consumer-latest.noarch.rpm'
 rhn_sys_release_version: '8.1'
 rhn_rpm_repos:
@@ -54,7 +54,7 @@ osp_templates_branch: osp16_home_lab
 # and tls everywhere
 enable_tls_everywhere: true
 idm_domain: voltron.xyz
-idm_server: 'idm.{{ idm_domain }}'
+idm_server: 'idm-a.{{ idm_domain }}'
 tls_everywhere_rpm_deps:
   - python3-nss
   - python3-novajoin
@@ -96,7 +96,7 @@ undercloud_dhcp_gateway: 172.16.24.1
 undercloud_enable_masquerade: false
 undercloud_name_servers:
   - 172.25.48.3
-  - 8.8.8.8
+  - 8.8.4.4
 undercloud_time_servers:
    - clock.nyc.he.net
    - clock.fmt.he.net
