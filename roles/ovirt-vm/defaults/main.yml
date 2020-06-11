@@ -11,31 +11,34 @@
 # end variables defined in vault file
 
 # General Settings
-vm_domain: voltron.xyz
+domain: infra.arl.lab
 
-# General Virtual Machine Settings
-ovirt_vm_name: 'osp16-dir-a.{{ vm_domain }}'
-ovirt_vm_cpu: 1
+# Virtual Machine Settings
+ovirt_vm_state: present
+ovirt_vm_name: 'test.{{domain}}'
+ovirt_vm_cpu: 2
 ovirt_vm_ram: 8Gib
 ovirt_vm_ram_guaranteed: 8Gib
-ovirt_vm_disk_size: 100Gib
+ovirt_vm_disk_size: 60Gib
 ovirt_vm_username: root
 ovirt_vm_template: rhel-8-1-template
-ovirt_vm_state: present
+ovirt_vm_dns_servers: "172.25.48.3 8.8.4.4"
+ovirt_vm_dns_search: '{{ domain }}'
 
-# Virtual Machine Nic Settings
-# primary nic
-ovirt_vnic_net_name: lab_ext_net
-ovirt_vnic: eth0
-ovirt_vnic_on_boot: true
-ovirt_vnic_boot_protocol: static
-ovirt_vnic_ip: 172.25.49.40
-ovirt_vnic_netmask: 255.255.254.0
-ovirt_vnic_gateway: 172.25.48.1
-ovirt_vm_dns_servers: "172.25.48.3 8.8.8.8"
-ovirt_vm_dns_search: '{{ vm_domain }}'
-
-# secondary nic
-ovirt_vnic_extra_net_name: provision_net
-ovirt_vnic_extra_nic: eth1
-...
+# dictionary of vm nics to be configured example
+# additional information
+# https://docs.ansible.com/ansible/latest/modules/ovirt_vm_module.html#parameter-cloud_init_nics
+ovirt_vm_nics:
+  - nic_name: eth0
+    nic_on_boot: yes
+    nic_boot_protocol: static
+    nic_ip_address: 172.25.100.10
+    nic_netmask: 255.255.255.0
+    nic_gateway: 172.25.100.1
+    ovirt_nic_profile: home_wired_net
+  - nic_name: eth1
+    nic_on_boot: yes
+    nic_boot_protocol: static
+    nic_ip_address: 172.25.54.10
+    nic_netmask: 255.255.255.0
+    ovirt_nic_profile: storage_mgmt

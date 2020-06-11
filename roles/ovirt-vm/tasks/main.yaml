@@ -1,4 +1,4 @@
 ---
-# tasks for ovirt-vm
+# tasks for ovirt-virtual-machine
   - include: ovirt-create-machine.yaml 
 ...

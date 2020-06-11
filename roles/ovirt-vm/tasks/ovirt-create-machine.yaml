@@ -1,5 +1,5 @@
 ---
-- name: 'Obtain SSO token using username/password credentials.'
+- name: 'Obtain SSO token using username/password credentials'
   ovirt_auth:
     url: '{{ ovirt_url }}'
     username: '{{ ovirt_username }}'
@@ -25,77 +25,60 @@
       user_name: '{{ ovirt_vm_username }}'
       root_password: '{{ ovirt_vm_root_passwd }}'
       authorized_ssh_keys: '{{ ovirt_vm_ssh_key }}'
-      nic_name: '{{ ovirt_vnic }}'
-      nic_boot_protocol: "{{ ovirt_vnic_boot_protocol | default('dhcp') }}"
-      nic_on_boot: '{{ ovirt_vnic_on_boot }}'
-      nic_ip_address: '{{ ovirt_vnic_ip }}'
-      nic_netmask: '{{ ovirt_vnic_netmask }}'
-      nic_gateway: '{{ ovirt_vnic_gateway }}'
       dns_servers: '{{ ovirt_vm_dns_servers }}'
       dns_search: '{{ ovirt_vm_dns_search }}'
+    cloud_init_nics: '{{ ovirt_vm_nics }}'
     state: present
   when: ovirt_vm_state == "running" or ovirt_vm_state == "present"
   tags: 
     - create_vm
 
-- name: 'Deleting virtual machine: {{ ovirt_vm_name }} [If play is tagged with delete_vm].'
+- name: 'Deleting virtual machine: {{ ovirt_vm_name }}'
   ovirt_vm:
     auth: '{{ ovirt_auth }}'
     name: '{{ ovirt_vm_name }}'
     cluster: '{{ ovirt_cluster_name }}'
     template: '{{ ovirt_vm_template }}'
     state: 'absent'
-  when: ovirt_vm_state == 'present' and 'delete_vm' in ansible_run_tags
+  when: ovirt_vm_state == "present" and "delete_vm" in ansible_run_tags 
   tags: 
     - delete_vm
-  delegate_to: localhost
 
-- name: "Retrieving facts for disk sizing and nic allocation."
+- name: 'Retrieving facts for disk sizing and nic allocation'
   ovirt_vm_info:
     auth: '{{ ovirt_auth }}'
     pattern: 'name={{ ovirt_vm_name }}'
     fetch_nested: true
     all_content: true
-  register: vmfacts
+  register: vm_info
   tags:
     - create_vm
 
-- name: "Change disk size of {{ ovirt_vm_name }} to desired size: {{ ovirt_vm_disk_size }}."
+- name: "Change disk size of {{ ovirt_vm_name }} to desired size {{ ovirt_vm_disk_size }}"
   ovirt_disk:
     auth: '{{ ovirt_auth }}'
     vm_name: '{{ ovirt_vm_name }}'
     size: '{{ ovirt_vm_disk_size }}'
-    id: '{{ vmfacts.ovirt_vms[0].disk_attachments[0].id }}'
+    id: '{{ vm_info.ovirt_vms[0].disk_attachments[0].id }}'
     state: attached
-  when: vmfacts.ovirt_vms[0].disk_attachments[0].id is defined and vmfacts.ovirt_vms[0].status is defined
+  when: vm_info.ovirt_vms[0].disk_attachments[0].id is defined and vm_info.ovirt_vms[0].status is defined
   tags:
     - create_vm
 
-- name: "Attaching primary vnic from {{ ovirt_vnic_net_name }} to {{ ovirt_vm_name }}."
+- name: "Attaching vnic profile to virtual machine."
   ovirt_nic:
     auth: '{{ ovirt_auth }}'
     vm: '{{ ovirt_vm_name }}'
-    name: '{{ ovirt_vnic }}'
-    profile: '{{ ovirt_vnic_net_name }}'
-    network: '{{ ovirt_vnic_net_name }}'
-    state: plugged
-  when: vmfacts.ovirt_vms[0].status is defined
+    name: '{{ item.nic_name }}'
+    profile: '{{ item.ovirt_nic_profile }}'
+    network: '{{ item.ovirt_nic_profile }}'
+    state: present
+  loop: '{{ ovirt_vm_nics }}'
+  when: vm_info.ovirt_vms[0].status is defined
   tags:
     - create_vm
 
-- name: "Attaching second vnic on {{ ovirt_vnic_extra_net_name }} to {{ ovirt_vm_name }}"
-  ovirt_nic:
-    auth: '{{ ovirt_auth }}'
-    vm: '{{ ovirt_vm_name }}'
-    name: '{{ ovirt_vnic_extra_nic }}'
-    profile: '{{ ovirt_vnic_extra_net_name }}'
-    network: '{{ ovirt_vnic_extra_net_name }}'
-    state: plugged
-  when: vmfacts.ovirt_vms[0].status is defined
-  tags:
-    - create_vm
-
-- name: "Pausing for 10 seconds before booting machine."
+- name: Pause for 10 seconds before booting machine 
   pause:
     seconds: 10
   tags:
@@ -106,13 +89,7 @@
     auth: '{{ ovirt_auth }}'
     name: '{{ ovirt_vm_name }}'
     state: running
-  when: vmfacts.ovirt_vms[0].status is defined and vmfacts.ovirt_vms[0].status == 'down'
-  tags:
-    - create_vm
-
-- name: "Waiting for 10 seconds to allow for virtual machine to fully boot."
-  pause:
-    seconds: 10
+  when: vm_info.ovirt_vms[0].status is defined and vm_info.ovirt_vms[0].status == 'down'
   tags:
     - create_vm
 
