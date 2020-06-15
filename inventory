@@ -3,8 +3,6 @@ deploy_vm:
   hosts:
     localhost:
       ansible_connection: local
-  vars:
-    ansible_python_interpreter: /home/ariveral/venvs/ansible_workspace/bin/python3
 
 director:
   hosts:
