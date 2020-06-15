@@ -1,7 +1,8 @@
 ---
 - name: '[STARTING Playbook] Deploying the Undercloud VM'
-  hosts: localhost
+  hosts: deploy_vm
   vars:
+    ansible_python_interpreter: /home/ariveral/software/venvs/virtual_workspace/bin/python3
     vm_domain: voltron.xyz
     ovirt_vm_name: 'osp16-dir.{{ vm_domain }}'
     ovirt_vm_cpu: 4
