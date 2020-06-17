@@ -54,7 +54,7 @@
   tags:
     - create_vm
 
-- name: "Change disk size of {{ ovirt_vm_name }} to desired size {{ ovirt_vm_disk_size }}"
+- name: 'Change disk size of {{ ovirt_vm_name }} to desired size {{ ovirt_vm_disk_size }}'
   ovirt_disk:
     auth: '{{ ovirt_auth }}'
     vm_name: '{{ ovirt_vm_name }}'
@@ -65,7 +65,7 @@
   tags:
     - create_vm
 
-- name: "Attaching vnic profile to virtual machine."
+- name: 'Attaching vnic profile to virtual machine.'
   ovirt_nic:
     auth: '{{ ovirt_auth }}'
     vm: '{{ ovirt_vm_name }}'
@@ -84,7 +84,7 @@
   tags:
     - create_vm
 
-- name: 'Starting virtual machine: {{ ovirt_vm_name }}'
+- name: 'Starting virtual machine: {{ ovirt_vm_name }}.'
   ovirt_vm:
     auth: '{{ ovirt_auth }}'
     name: '{{ ovirt_vm_name }}'
@@ -93,7 +93,7 @@
   tags:
     - create_vm
 
-- name: Revoking SSO Token....
+- name: 'Revoking SSO token....'
   ovirt_auth:
     state: absent
     ovirt_auth: '{{ ovirt_auth }}'
