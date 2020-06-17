@@ -28,17 +28,17 @@ ovirt_vm_dns_search: '{{ domain }}'
 # dictionary of vm nics to be configured example
 # additional information
 # https://docs.ansible.com/ansible/latest/modules/ovirt_vm_module.html#parameter-cloud_init_nics
-ovirt_vm_nics:
-  - nic_name: eth0
-    nic_on_boot: yes
-    nic_boot_protocol: static
-    nic_ip_address: 172.25.100.10
-    nic_netmask: 255.255.255.0
-    nic_gateway: 172.25.100.1
-    ovirt_nic_profile: home_wired_net
-  - nic_name: eth1
-    nic_on_boot: yes
-    nic_boot_protocol: static
-    nic_ip_address: 172.25.54.10
-    nic_netmask: 255.255.255.0
-    ovirt_nic_profile: storage_mgmt
+#ovirt_vm_nics:
+#  - nic_name: eth0
+#    nic_on_boot: yes
+#    nic_boot_protocol: static
+#    nic_ip_address: 172.25.100.10
+#    nic_netmask: 255.255.255.0
+#    nic_gateway: 172.25.100.1
+#    ovirt_nic_profile: home_wired_net
+#  - nic_name: eth1
+#    nic_on_boot: yes
+#    nic_boot_protocol: static
+#    nic_ip_address: 172.25.54.10
+#    nic_netmask: 255.255.255.0
+#    ovirt_nic_profile: storage_mgmt
