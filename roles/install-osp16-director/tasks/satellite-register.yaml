@@ -15,11 +15,11 @@
   until: result is succeeded
   retries: 10
   delay: 5
-  when: "'Unknown' in reg_status.stdout"
+  when: '"Unknown" in reg_status.stdout'
   tags:
     - sat_install
 
-- name: 'Enable Satellite Registration [If not registered]'
+- name: 'Enable Satellite Registration [If not registered].'
   redhat_subscription:
     server_hostname: '{{ satellite_host }}'
     org_id: '{{ rhn_org }}'
@@ -27,7 +27,7 @@
     state: present
     force_register: yes
     release: '{{ rhn_sys_release_version | default(8) }}'
-  when: "'Unknown' in reg_status.stdout"
+  when: '"Unknown" in reg_status.stdout'
   register: sat_registration
   until: sat_registration is succeeded
   retries: 10
@@ -46,7 +46,7 @@
   tags:
     - sat_install
 
-- name: 'Enable the configured repositories from the vars file'
+- name: 'Enable the configured repositories from the vars file.'
   rhsm_repository:
     name: '{{ rhn_rpm_repos }}'
     state: enabled

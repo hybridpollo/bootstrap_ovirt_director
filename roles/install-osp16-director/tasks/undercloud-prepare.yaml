@@ -104,10 +104,10 @@
     - otp_file.stat.exists == True
   tags: undercloud_config
 
-- name: 'Generate the OTP password used for novajoin and TLS everywhere'
+- name: 'Generate the OTP password used for novajoin and TLS everywhere.'
   shell: >
     /usr/libexec/novajoin-ipa-setup \
-    --principal admin \
+    --principal '{{ idm_user_principal }} \
     --password '{{ idm_password }}' \
     --server '{{ idm_server }}' \
     --realm '{{ idm_domain|upper }}' \

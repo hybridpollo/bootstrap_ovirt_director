@@ -2,7 +2,7 @@
 # Only deployed the undercloud if the any of the 
 # register results from undercloud preparation tasks
 # were changed
-- name: 'Perform the undercloud installation'
+- name: 'Perform the undercloud installation.'
   shell: >
     openstack undercloud install
   args:
@@ -10,4 +10,4 @@
   become: yes
   become_user: stack
   tags: undercloud_install
-  when: uc_conf_gen.changed or uc_container_images_file_gen.changed or uc_custom_params_gen.changed
+  when: uc_conf_gen.changed or uc_custom_params_gen.changed
