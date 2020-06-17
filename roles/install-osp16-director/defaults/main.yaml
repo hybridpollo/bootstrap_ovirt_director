@@ -55,6 +55,7 @@ osp_templates_branch: osp16_home_lab
 enable_tls_everywhere: true
 idm_domain: voltron.xyz
 idm_server: 'idm-a.{{ idm_domain }}'
+idm_user_principal: admin
 tls_everywhere_rpm_deps:
   - python3-nss
   - python3-novajoin

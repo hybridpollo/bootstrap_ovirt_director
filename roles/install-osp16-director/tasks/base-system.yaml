@@ -1,9 +1,9 @@
 ---
-- name: Set the system hostname
+- name: 'Set the system hostname.'
   hostname:
     name: '{{ uc_short_hostname }}.{{ domain }}'
 
-- name: 'Set the root password for the system'
+- name: 'Set the root password for the system.'
   user:
     name: root
     password: '{{ root_pass }}'
@@ -27,7 +27,7 @@
     state: present 
   loop: '{{ user_list }}'
 
-- name: 'Ensure /etc/sudoers.d directory exists' 
+- name: 'Ensure /etc/sudoers.d directory exists.' 
   file: 
      path: /etc/sudoers.d
      state: directory

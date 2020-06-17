@@ -10,15 +10,13 @@
   loop: 
     - '{{ github_ssh_priv_key }}'
     - '{{ github_ssh_pub_key }}'
-  tags: 
-    - fetch_git_templates
+  tags: fetch_git_templates
 
-- name: 'Ensure github.com is part of the authorized hosts'
+- name: 'Ensure github.com is part of the authorized hosts.'
   shell: > 
      ssh-keyscan -H github.com >> /home/stack/.ssh/known_hosts
   when: enable_git_clone == True
-  tags: 
-    - fetch_git_templates
+  tags: fetch_git_templates
     
 - name:  'Create the git temporary directory with the right permissions'
   file:
@@ -28,8 +26,7 @@
     group: '{{ uc_user }}'
     state: directory
   when: enable_git_clone == True
-  tags:
-    - fetch_git_templates
+  tags: fetch_git_templates
 
 - name: 'Clone git repository for RHOSP 16 templates in to {{ uc_home_path }}/overcloud_deployment.'
   git:
@@ -41,5 +38,4 @@
   become: yes
   become_user: stack
   when: enable_git_clone == True
-  tags:
-    - fetch_git_templates
+  tags: fetch_git_templates

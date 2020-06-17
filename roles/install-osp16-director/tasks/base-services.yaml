@@ -1,5 +1,5 @@
 ---
-- name: 'Configure chrony ntp client'
+- name: 'Configure the chrony ntp client.'
   template:
     src: templates/chrony_server.j2
     dest: /etc/chrony.conf
@@ -10,7 +10,7 @@
      - restart_chrony 
   tags: base_services
 
-- name: 'Ensure base services started'
+- name: 'Ensure base services started.'
   service: 
     name: '{{ item }}'
     state: started

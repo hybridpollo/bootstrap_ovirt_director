@@ -1,8 +1,9 @@
 ---
-- name: '[STARTING Playbook] Deploying the Undercloud/Director Base Software'
+- name: '[STARTING Playbook] Deploying the Undercloud/Director Base Software.'
   hosts: director
   vars:
     enable_git_clone: true
+    ansible_python_interpreter: /home/ariveral/software/venvs/virtual_workspace/bin/python3
   vars_files:
     - vault/vars/director-vars.yaml
   roles:

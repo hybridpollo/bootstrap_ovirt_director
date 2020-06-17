@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-
+#
+# Script used to generate password hashes 
+# for the ansible user module
+# https://docs.ansible.com/ansible/latest/reference_appendices/faq.html#how-do-i-generate-encrypted-passwords-for-the-user-module
+#
 import getpass
 import sys
 from passlib.hash import sha512_crypt
@@ -13,5 +17,5 @@ if __name__ == "__main__":
       passwd = sys.argv[1]
       p_hash(passwd)
     else:
-      passwd = getpass.getpass('Enter Password to Hash: ')
+      passwd = getpass.getpass('Enter password to hash: ')
       p_hash(passwd)
