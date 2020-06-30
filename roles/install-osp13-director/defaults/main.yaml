@@ -10,6 +10,10 @@ time_servers:
    - clock.sjc.he.net
 
 sudo_group: wheel
+user_list:
+  - user_name: stack 
+    uid: 1001 
+
 uc_short_hostname: osp-dir
 uc_user: stack
 uc_group: stack

@@ -1,7 +1,8 @@
 ---
-- name: Set the system hostname
+- name: 'Set the system hostname.'
   hostname:
     name: '{{ uc_short_hostname }}.{{ domain }}'
+  tags: base_system
 
 - name: 'Set the root password for the system.'
   user:
@@ -9,29 +10,35 @@
     password: '{{ root_pass }}'
     update_password: always
     state: present
+  tags: base_system
 
 - name: 'Ensure the configured sudo group: {{ sudo_group }} exists.'
   group:
     name: '{{ sudo_group }}'
     state: present
+  tags: base_system
 
-- name: 'Configure the stack user.'
+- name: 'Set the base users.'
   user: 
-    name: '{{ uc_user }}'
+    name: '{{ item.user_name }}'
+    uid: '{{ item.uid }}'
     groups: '{{ sudo_group }}'
     append: yes
     shell: /bin/bash
-    password: '{{ uc_user_pass }}'
+    password: '{{ user_pass }}'
     update_password: always
     state: present 
+  loop: '{{ user_list }}'
+  tags: base_system
 
-- name: 'Ensure /etc/sudoers.d directory exists' 
+- name: 'Ensure /etc/sudoers.d directory exists.' 
   file: 
      path: /etc/sudoers.d
      state: directory
      owner: root
      group: root
      mode: 0750
+  tags: base_system
 
 - name: 'Ensure sudoers file exists.'
   template: 
@@ -40,10 +47,5 @@
      owner: root
      group: root
      mode: 0440
+  tags: base_system
 
-- name: 'Configure hosts file.'
-  lineinfile:
-    path: /etc/hosts
-    backup: true
-    regexp: '^127\.0\.0\.1'
-    line: '127.0.0.1   {{ uc_short_hostname }}.{{ domain}} localhost localhost.localdomain localhost4 localhost4.localdomain4'
