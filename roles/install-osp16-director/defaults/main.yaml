@@ -9,7 +9,8 @@ time_servers:
    - clock.fmt.he.net
 
 user_list:
-  - { user_name: stack, uid: 1001, groups: '{{ sudo_group }}' } 
+  - user_name: stack 
+    uid: 1001 
 
 uc_short_hostname: osp16-dir
 uc_user: stack

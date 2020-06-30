@@ -107,7 +107,7 @@
 - name: 'Generate the OTP password used for novajoin and TLS everywhere.'
   shell: >
     /usr/libexec/novajoin-ipa-setup \
-    --principal '{{ idm_user_principal }} \
+    --principal '{{ idm_user_principal }}' \
     --password '{{ idm_password }}' \
     --server '{{ idm_server }}' \
     --realm '{{ idm_domain|upper }}' \
