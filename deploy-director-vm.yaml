@@ -4,18 +4,18 @@
   vars:
     ansible_python_interpreter: /home/arlaporte/virtual_environments/ansible_osp_ws/bin/python3
     vm_domain: voltron.xyz
-    ovirt_vm_name: 'osp16-dir-test.{{ vm_domain }}'
+    ovirt_vm_name: 'osp16-dir.{{ vm_domain }}'
     ovirt_vm_cpu: 4
     ovirt_vm_ram: 16Gib
     ovirt_vm_ram_guaranteed: 16Gib
     ovirt_vm_disk_size: 200Gib
-    ovirt_vm_dns_servers: '172.25.48.3 8.8.4.4'
+    ovirt_vm_dns_servers: '172.25.48.254 8.8.4.4'
     ovirt_vm_dns_search: 'voltron.xyz infra.arl.lab'
     ovirt_vm_nics:
       - nic_name: eth0
         nic_on_boot: yes
         nic_boot_protocol: static
-        nic_ip_address: 172.25.49.10
+        nic_ip_address: 172.25.48.10
         nic_netmask: 255.255.254.0
         nic_gateway: 172.25.48.1
         ovirt_nic_profile: lab_ext_net
