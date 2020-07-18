@@ -3,6 +3,7 @@
   hosts: director
   vars:
     enable_git_clone: true
+    osp_templates_branch: osp16_home_lab_multi_stack
   vars_files:
     - vault/vars/director-vars.yaml
   roles:

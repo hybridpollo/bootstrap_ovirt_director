@@ -90,8 +90,8 @@ undercloud_local_ip: 172.16.24.2/24
 undercloud_public_vip: 172.16.24.3
 undercloud_admin_vip: 172.16.24.4
 undercloud_provisioning_cidr: 172.16.24.0/24
-undercloud_dhcp_provisioning_start: 172.16.24.5
-undercloud_dhcp_provisioning_end: 172.16.24.24
+undercloud_dhcp_provisioning_start: 172.16.24.200
+undercloud_dhcp_provisioning_end: 172.16.24.250
 undercloud_dhcp_inspection_start: 172.16.24.100
 undercloud_dhcp_inspection_end: 172.16.24.120
 undercloud_dhcp_gateway: 172.16.24.1
