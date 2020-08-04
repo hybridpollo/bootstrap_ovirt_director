@@ -6,8 +6,8 @@
     vm_domain: voltron.xyz
     ovirt_vm_name: 'osp16-dir.{{ vm_domain }}'
     ovirt_vm_cpu: 4
-    ovirt_vm_ram: 16Gib
-    ovirt_vm_ram_guaranteed: 16Gib
+    ovirt_vm_ram: 24Gib
+    ovirt_vm_ram_guaranteed: 24Gib
     ovirt_vm_disk_size: 200Gib
     ovirt_vm_dns_servers: '172.25.48.254 8.8.4.4'
     ovirt_vm_dns_search: 'voltron.xyz infra.arl.lab'
