@@ -6,3 +6,4 @@
 - include: base-services.yaml
 - include: undercloud-prepare.yaml
 - include: undercloud-install.yaml
+- include: undercloud-post-install.yaml

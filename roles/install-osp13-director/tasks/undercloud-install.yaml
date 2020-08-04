@@ -8,16 +8,3 @@
   become_user: stack
   when: config_gen.changed 
   tags: undercloud_install
-
-- name: 'Extracting overcloud deployment images into the {{ uc_home_path }}/overcloud_images directory.'
-  unarchive:
-    remote_src: yes
-    src: '{{ item }}'
-    dest: '{{ uc_home_path }}/overcloud_images'
-  loop:
-    - /usr/share/rhosp-director-images/overcloud-full-latest.tar
-    - /usr/share/rhosp-director-images/ironic-python-agent-latest.tar
-  tags:
-    - fetch_overcloud_images
-    - undercloud_install
-
