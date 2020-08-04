@@ -44,8 +44,8 @@ rhn_rpm_repos:
 
 # List of ssh keys are used to bootstrap git when enabled
 enable_git_clone: true
-github_ssh_priv_key: /home/ariveral/.ssh/id_rsa
-github_ssh_pub_key: /home/ariveral/.ssh/id_rsa.pub
+github_ssh_priv_key: /home/arlaporte/.ssh/id_rsa
+github_ssh_pub_key: /home/arlaporte/.ssh/id_rsa.pub
 
 # Git repository to clone
 osp_templates_repo: git@github.com:hybridpollo/osp_templates.git
@@ -90,14 +90,14 @@ undercloud_local_ip: 172.16.24.2/24
 undercloud_public_vip: 172.16.24.3
 undercloud_admin_vip: 172.16.24.4
 undercloud_provisioning_cidr: 172.16.24.0/24
-undercloud_dhcp_provisioning_start: 172.16.24.5
-undercloud_dhcp_provisioning_end: 172.16.24.24
+undercloud_dhcp_provisioning_start: 172.16.24.200
+undercloud_dhcp_provisioning_end: 172.16.24.250
 undercloud_dhcp_inspection_start: 172.16.24.100
 undercloud_dhcp_inspection_end: 172.16.24.120
 undercloud_dhcp_gateway: 172.16.24.1
 undercloud_enable_masquerade: false
 undercloud_name_servers:
-  - 172.25.48.3
+  - 172.25.48.254
   - 8.8.4.4
 undercloud_time_servers:
    - clock.nyc.he.net
@@ -109,6 +109,10 @@ undercloud_enabled_hardware_types:
   - staging-ovirt
   - ilo
   - ipmi
+
+# container registry parameters
 undercloud_container_registry_address: 172.16.24.2:8787
-container_registry_username: '5318211|rhn-gps-ariveral'
-container_registry_password: 'eyJhbGciOiJSUzUxMiJ9.eyJzdWIiOiIwMGY0MWEzODc3YTc0NzEyYjY1ODcxNTg5MGQ4Yjc4YSJ9.vQHC_hsKDxGTiZ8ilJyCBsmYUr1nCpznXHI_hvNiqBA2_WyMr-FXvi9GOVHN8AF0_2LCjTgJAgijSLZuRJhav7faFsnovuWvCJ7Os4-BpnoSHFzKX_kwsV8suPzl9FxQnezpgbE6gMUp2PVg0wpYvB9r9cC3vnF16vRXbqjM9vF-U-h26vAhWYONthgO8WWaOTILCJtGAe1kUZk9STxspFTIhmmw8G3xIhgnCEBEcQPAAYQpW4jNBj0JtoFHBVukxs6CFiczZ_z_EL2E88zD6M_Xo4n-DTrmmVI4lxbjCo_Z2lxz0ws9Y81hnMagsXHP6Waod1tvVIWIvh9p8iWBuz8Z4EDO1M5g-RIWkj3RhNypgufUM9coBTgSJVpTljh3IvaQlV_AaZAmm6ObBkTzBZGRyik38nqbA5WUkjzN8TlIphjecpp2D-RVOtF7pzXSNVPjEPGY_BKaz-_UrZdNvO7stQw0jq7C5h5OpyIIrLNqh-j-QW7glNcF14o6ItizoH5pF74gaXHB_QWUfXcGa_zQTtuvjlIl4vpvKuHI1igw-p4VRJMfdQgmHeDB0UlPgLmsMeAnml3nQZNx1vqOoMwqfthOv5Ty6LfQm4I7M5-59V2j4DkNQp4gqIcmLKdW5LLFK-RwBb2aHuqkXlh4CJ-cOWZyLjB_sBa6OldVfQ4'
+# container registry username and password
+# are vaulted
+#container_registry_username: 
+#container_registry_password:

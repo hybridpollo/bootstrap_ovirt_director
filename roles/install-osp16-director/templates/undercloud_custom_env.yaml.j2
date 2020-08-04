@@ -3,3 +3,7 @@
 parameter_defaults:
   IronicDefaultDeployInterface: direct
   IronicImageDownloadSource: http
+  HeatMaxJsonBodySize: 12000000
+  MySQLServerOptions:
+    mysqld:
+      max_allowed_packet: 64M

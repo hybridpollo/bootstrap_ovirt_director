@@ -1,0 +1,39 @@
+---
+- name: 'Extracting overcloud deployment images into the {{ uc_home_path }}/overcloud_images directory.'                                                                                                                               
+  unarchive:                                                                                                                                                                                                                           
+    remote_src: yes                                                                                                                                                                                                                    
+    src: '{{ item }}'                                                                                                                                                                                                                  
+    dest: '{{ uc_home_path }}/overcloud_images'                                                                                                                                                                                        
+  loop:                                                                                                                                                                                                                                
+    - /usr/share/rhosp-director-images/overcloud-full-latest.tar                                                                                                                                                                       
+    - /usr/share/rhosp-director-images/ironic-python-agent-latest.tar                                                                                                                                                                  
+  tags:                                                                                                                                                                                                                                
+    - undercloud_post_install
+
+- name: "Verify Glance API is operational before uploading deployment images to Undercloud."
+  shell: >
+    source "{{ uc_home_path }}/stackrc";
+    openstack image list > /dev/null
+  args:
+    executable: /bin/bash
+  changed_when: false
+  register: check_endpoint
+  tags:
+    - undercloud_post_install
+ 
+- name: Debug output 
+  debug:
+    msg: "Return code is {{ check_endpoint.rc }}"
+  tags:
+    - undercloud_post_install
+
+- name: "Uploading deployment images to Undercloud."
+  shell: >
+    source "{{ uc_home_path }}/stackrc";
+    openstack overcloud image upload --image-path "{{ uc_home_path }}/overcloud_images" > /dev/null
+  args:
+    executable: /bin/bash
+  when: check_endpoint.rc == 0
+  tags:
+    - undercloud_post_install
+

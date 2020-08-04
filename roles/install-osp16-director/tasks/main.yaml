@@ -8,3 +8,4 @@
 - include: fetch-git-templates.yaml
   when: enable_git_clone == True
 - include: undercloud-install.yaml
+- include: undercloud-post-install.yaml
