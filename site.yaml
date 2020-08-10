@@ -1,9 +1,20 @@
 ---
-- name: 'Deploying the director virtual machine hosted in ovirt'
+- name: Deploying director vm hosted in ovirt
   import_playbook: deploy-director-vm.yaml
   tags:
     - create_vm
-- name: 'Deploying the director software on deployed vm'
+
+- hosts: director
+  tasks:
+  - name: Wait for the director to become responsive
+    wait_for_connection:
+      connect_timeout: 30
+      sleep: 5
+      timeout: 300
+  tags:
+    - create_vm
+  
+- name: Deploying director software on vm
   import_playbook: configure-director.yaml
   tags:
     - create_vm
