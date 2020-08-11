@@ -1,5 +1,5 @@
 ---
-- name: 'Copy github keys to {{ uc_home_path }}/.ssh.'
+- name: Copy github keys to {{ uc_home_path }}/.ssh
   copy:
     src: '{{ item }}'
     dest: '{{ uc_home_path }}/.ssh' 
@@ -12,13 +12,13 @@
     - '{{ github_ssh_pub_key }}'
   tags: fetch_git_templates
 
-- name: 'Ensure github.com is part of the authorized hosts.'
+- name: Add github.com to known hosts file
   shell: > 
      ssh-keyscan -H github.com >> /home/stack/.ssh/known_hosts
   when: enable_git_clone == True
   tags: fetch_git_templates
     
-- name:  'Create the git temporary directory with the right permissions'
+- name: Create the git temporary directory with proper permissions
   file:
     path: '{{ uc_home_path }}/.ansible/tmp'
     mode: 0755
@@ -28,7 +28,7 @@
   when: enable_git_clone == True
   tags: fetch_git_templates
 
-- name: 'Clone git repository for RHOSP 16 templates in to {{ uc_home_path }}/overcloud_deployment.'
+- name: Clone git repository for RHOSP 16 templates in to {{ uc_home_path }}/overcloud_deployment.
   git:
     repo: '{{ osp_templates_repo }}'
     version: '{{ osp_templates_branch }}'

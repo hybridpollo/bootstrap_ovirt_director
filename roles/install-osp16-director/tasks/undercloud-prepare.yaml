@@ -1,5 +1,5 @@
 ---
-- name: '[If Enabled ] Activating the pki-deps module to install the python3-nss package.'
+- name: Activating the pki-deps module to install the python3-nss package if using TLS-Everywhere
   shell: >
      yum module enable -y pki-deps
   retries: 10
@@ -9,7 +9,7 @@
   tags: 
     - undercloud_config
 
-- name: '[If Enabled ] Installing TLS-Everywhere rpm dependencies.'
+- name: Installing rpm dependencies if using TLS-Everywhere
   yum:
     name: '{{ tls_everywhere_rpm_deps }}'
     state: installed
@@ -22,7 +22,7 @@
   tags: 
     - undercloud_config
 
-- name: 'Installing tripleo | undercloud packages.'
+- name: Installing tripleo packages
   yum:
     name: '{{ uc_rpm_packages }}'
     state: installed
@@ -34,7 +34,7 @@
   tags: 
     - undercloud_config
 
-- name: 'Configuring the undercloud.conf from template.'
+- name: Configuring the undercloud.conf from template
   template:
     src: undercloud.conf.j2
     dest: '{{ uc_home_path }}/undercloud.conf'
@@ -45,7 +45,7 @@
   tags: 
     - undercloud_config
 
-- name: 'Configuring the container image preparation file from template.'
+- name: Configuring the container image preparation file from template
   template:
     src: container_image_prepare.yaml.j2
     dest: '{{ uc_home_path }}/container_image_prepare.yaml'
@@ -56,7 +56,7 @@
   tags: 
     - undercloud_config
 
-- name: 'Configuring the undercloud custom parameters file from template.'
+- name: Configuring the undercloud custom parameters file from template
   template:
     src: undercloud_custom_env.yaml.j2
     dest: '{{ uc_home_path }}/undercloud_custom_env.yaml'
@@ -67,7 +67,7 @@
   tags: 
     - undercloud_config
 
-- name: 'Create templates and image directories in {{ uc_home_path }}.'
+- name: Create templates and image directories in {{ uc_home_path }}
   file:
     path: '{{ uc_home_path }}/{{ item }}'
     owner: '{{ uc_user }}'
@@ -79,7 +79,7 @@
   tags: 
     - undercloud_config
 
-- name: 'Ensure the {{ uc_home_path }}/.ssh directory exists.'
+- name: Ensure the {{ uc_home_path }}/.ssh directory exists
   file:
     path: '{{ uc_home_path }}/.ssh'
     state: directory
@@ -89,14 +89,14 @@
   tags: 
     - undercloud_config
    
-- name: 'Check for the existence of the {{ uc_home_path }}/ipa_otp file prior to generation.'
+- name: Check for {{ uc_home_path }}/ipa_otp file prior to generation if using TLS Everywhere
   stat:
     path: '{{ uc_home_path }}/ipa_otp'
   when: enable_tls_everywhere == True
   register: otp_file
   tags: undercloud_config
 
-- name: 'Halt the installation if the file {{ uc_home_path }}/ipa_otp exists.'
+- name: Halt the installation if file {{ uc_home_path }}/ipa_otp exists.'
   fail:
     msg: 'WARNING: File: {{ uc_home_path }}/ipa_otp exists. This host may have already join the IDM Domain. Manual intervention suggested.'
   when:
@@ -104,7 +104,7 @@
     - otp_file.stat.exists == True
   tags: undercloud_config
 
-- name: 'Generate the OTP password used for novajoin and TLS everywhere.'
+- name: Generate the OTP password used for novajoin if using TLS Everywhere
   shell: >
     /usr/libexec/novajoin-ipa-setup \
     --principal '{{ idm_user_principal }}' \
@@ -122,7 +122,7 @@
   become_user: stack
   tags: undercloud_config
 
-- name: 'Update the ipa_otp variable in /home/stack/undercloud.conf'
+- name: Update the ipa_otp parameter in {{ uc_home_path }}/undercloud.conf
   lineinfile:
     path: '{{ uc_home_path }}/undercloud.conf'
     regexp: '^.*ipa_otp.*'

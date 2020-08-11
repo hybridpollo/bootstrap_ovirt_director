@@ -1,5 +1,5 @@
 ---
-- name: '[STARTING Playbook] Deploying the Undercloud VM.'
+- name: '[STARTING Playbook] Creating the Undercloud VM in Ovirt'
   hosts: deploy_vm
   vars:
     ansible_python_interpreter: /home/arlaporte/virtual_environments/ansible_osp_ws/bin/python3

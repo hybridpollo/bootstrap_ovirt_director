@@ -1,10 +1,10 @@
 ---
-- name: 'Set the system hostname.'
+- name: Set the system hostname
   hostname:
     name: '{{ uc_short_hostname }}.{{ domain }}'
   tags: base_system
 
-- name: 'Set the root password for the system.'
+- name: Set the root password for the system
   user:
     name: root
     password: '{{ root_pass }}'
@@ -12,13 +12,13 @@
     state: present
   tags: base_system
 
-- name: 'Ensure the configured sudo group: {{ sudo_group }} exists.'
+- name: Ensure the configured sudo group {{ sudo_group }} exists
   group:
     name: '{{ sudo_group }}'
     state: present
   tags: base_system
 
-- name: 'Set the base users.'
+- name: Create the base users for the system
   user: 
     name: '{{ item.user_name }}'
     uid: '{{ item.uid }}'
@@ -31,7 +31,7 @@
   loop: '{{ user_list }}'
   tags: base_system
 
-- name: 'Ensure /etc/sudoers.d directory exists.' 
+- name: Ensure /etc/sudoers.d directory exists 
   file: 
      path: /etc/sudoers.d
      state: directory
@@ -40,7 +40,7 @@
      mode: 0750
   tags: base_system
 
-- name: 'Ensure sudoers file exists.'
+- name: Create sudoers file from template
   template: 
      src: templates/extra-sudo-users.j2
      dest: /etc/sudoers.d/extra-sudo-users
@@ -48,4 +48,3 @@
      group: root
      mode: 0440
   tags: base_system
-

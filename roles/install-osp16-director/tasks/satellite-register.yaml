@@ -1,5 +1,5 @@
 ---
-- name: 'Get current Satellite registration status.'
+- name: Get current Satellite registration status
   command: subscription-manager status
   register: reg_status
   ignore_errors: yes
@@ -7,7 +7,7 @@
   tags:
     - sat_install
 
-- name: 'Install katello consumer CA on host [If not registered].'
+- name: Install katello consumer CA on host if unregistered 
   yum:
     name: '{{ katello_rpm_url }}'
     state: present
@@ -19,7 +19,7 @@
   tags:
     - sat_install
 
-- name: 'Enable Satellite Registration [If not registered].'
+- name: Enable Satellite Registration if unregistered
   redhat_subscription:
     server_hostname: '{{ satellite_host }}'
     org_id: '{{ rhn_org }}'
@@ -35,8 +35,7 @@
   tags:
     - sat_install
 
-
-- name: 'Disable all repositories not required.'
+- name: Disable all repositories not required
   rhsm_repository:
     name: '*'
     state: disabled
@@ -46,7 +45,7 @@
   tags:
     - sat_install
 
-- name: 'Enable the configured repositories from the vars file.'
+- name: Enable the configured repositories from the vars file
   rhsm_repository:
     name: '{{ rhn_rpm_repos }}'
     state: enabled
@@ -57,7 +56,7 @@
   tags:
     - sat_install
 
-- name: 'Install the Katello agent on host.'
+- name: Install the Katello agent on host
   yum:
     name: katello-agent
     state: present

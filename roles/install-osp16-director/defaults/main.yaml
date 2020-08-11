@@ -32,13 +32,13 @@ uc_rpm_packages:
 # vault/vars/director-vars.yaml
 satellite_host: satellite.voltron.xyz
 katello_rpm_url: 'http://{{ satellite_host }}/pub/katello-ca-consumer-latest.noarch.rpm'
-rhn_sys_release_version: '8.1'
+rhn_sys_release_version: '8.2'
 rhn_rpm_repos:
   - rhel-8-for-x86_64-baseos-eus-rpms
-  - rhel-8-for-x86_64-appstream-rpms 
+  - rhel-8-for-x86_64-appstream-eus-rpms
   - rhel-8-for-x86_64-highavailability-eus-rpms
-  - ansible-2.8-for-rhel-8-x86_64-rpms 
-  - openstack-16-for-rhel-8-x86_64-rpms
+  - ansible-2.9-for-rhel-8-x86_64-rpms 
+  - openstack-16.1-for-rhel-8-x86_64-rpms
   - satellite-tools-6.5-for-rhel-8-x86_64-rpms
   - fast-datapath-for-rhel-8-x86_64-rpms
 
