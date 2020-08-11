@@ -1,5 +1,5 @@
 ---
-- name: 'Install tripleo | undercloud packages.'
+- name: Installing tripleo packages
   yum:
     name: '{{ uc_rpm_packages }}'
     state: installed
@@ -10,7 +10,7 @@
   delay: 5
   tags: undercloud_config
 
-- name: 'Configure the undercloud.conf for OSP 13 from template.'
+- name: Configure the undercloud.conf from template
   template:
     src: undercloud.conf.j2
     dest: '{{ uc_home_path }}/undercloud.conf'
@@ -20,7 +20,7 @@
   register: config_gen
   tags: undercloud_config
 
-- name: 'Create templates and image directories in {{ uc_home_path }}.'
+- name: Create templates and image directories in {{ uc_home_path }}
   file:
     path: '{{ uc_home_path }}/{{ item }}'
     owner: '{{ uc_user }}'
@@ -29,59 +29,4 @@
     state: directory
   loop:
     '{{ uc_dirs }}'
-  tags: undercloud_config
-
-- name: 'Ensure the {{ uc_home_path }}/.ssh directory exists.'
-  file:
-    path: '{{ uc_home_path }}/.ssh'
-    state: directory
-    owner: '{{ uc_user }}'
-    group: '{{ uc_user }}'
-    mode: 0744
-  tags: undercloud_config
-   
-- name: 'Copy local ssh keys to {{ uc_home_path }} for git.'
-  copy:
-    src: '{{ item }}'
-    dest: '{{ uc_home_path }}/.ssh' 
-    owner: '{{ uc_user }}'
-    group: '{{ uc_user }}'
-    mode: 0600
-  loop: 
-    - '{{ github_ssh_priv_key }}'
-    - '{{ github_ssh_pub_key }}'
-  tags: undercloud_config
-
-- name: 'Add local public ssh key to {{ uc_home_path }}/.ssh/authorized_keys'
-  copy: 
-    src: '{{ github_ssh_pub_key }}'
-    dest: '{{ uc_home_path }}/.ssh/authorized_keys'
-    owner: '{{ uc_user }}'
-    group: '{{ uc_user }}'
-    mode: 0640
-  tags: undercloud_config
-
-- name: 'Ensure github.com is part of the authorized hosts'
-  shell: > 
-     ssh-keyscan -H github.com >> /home/stack/.ssh/known_hosts
-  tags: undercloud_config
-    
-- name:  Create the git temporary directory with the right permissions
-  file:
-    path: '{{ uc_home_path }}/.ansible/tmp'
-    mode: 0755
-    owner: '{{ uc_user }}'
-    group: '{{ uc_user }}'
-    state: directory
-  tags: undercloud_config
-
-- name: 'Clone the git repository containtaing the RHOSP 13 templates in to /home/stack'
-  git:
-    repo: '{{ osp_templates_repo }}'
-    version: '{{ osp_templates_branch }}'
-    dest: /home/stack/templates
-    clone: yes
-    accept_hostkey: yes
-  become: yes
-  become_user: stack
   tags: undercloud_config

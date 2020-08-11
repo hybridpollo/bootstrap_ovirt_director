@@ -5,5 +5,7 @@
 - include: system-updates.yaml
 - include: base-services.yaml
 - include: undercloud-prepare.yaml
+- include: fetch-git-templates.yaml
+  when: enable_git_clone == True
 - include: undercloud-install.yaml
 - include: undercloud-post-install.yaml

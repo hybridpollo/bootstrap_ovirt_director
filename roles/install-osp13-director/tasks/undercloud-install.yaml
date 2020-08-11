@@ -1,10 +1,13 @@
 ---
-- name: 'Perform the undercloud installation'
+# Only deployed the undercloud if the any of the 
+# register results from undercloud preparation tasks
+# were changed
+- name: Perform the undercloud installation
   shell: >
     openstack undercloud install
   args:
-    chdir: /home/stack
+    chdir: '{{ uc_home_dir }}' 
   become: yes
   become_user: stack
-  when: config_gen.changed 
   tags: undercloud_install
+  when: uc_conf_gen.changed

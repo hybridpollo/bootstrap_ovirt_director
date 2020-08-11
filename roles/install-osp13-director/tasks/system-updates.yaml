@@ -1,12 +1,12 @@
 ---
-- name: 'Remove the cloud-init rpm before updating and rebooting'
+- name: Remove the cloud-init rpm before applying updates
   yum:
     name: cloud-init
     state: absent
   tags:
     - system_updates
 
-- name: 'Update all installed packages.'
+- name: Update all installed packages
   yum:
     name: '*'
     state: latest
@@ -17,7 +17,7 @@
   tags:
     - system_updates
 
-- name: 'Reboot after updating.'
+- name: Reboot after updates
   shell: > 
     sleep 5 && systemctl reboot
   async: 1
@@ -27,7 +27,7 @@
   tags:
     - system_updates
 
-- name:  'Wait for host to become responsive.'
+- name: Wait for host to become responsive after reboot
   wait_for_connection:
     connect_timeout: 30
     sleep: 5

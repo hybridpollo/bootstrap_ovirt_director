@@ -1,5 +1,5 @@
 ---
-- name: 'Extracting overcloud deployment images into the {{ uc_home_path }}/overcloud_images directory.'                                                                                                                               
+- name: Extracting overcloud deployment images into the {{ uc_home_path }}/overcloud_images directory
   unarchive:                                                                                                                                                                                                                           
     remote_src: yes                                                                                                                                                                                                                    
     src: '{{ item }}'                                                                                                                                                                                                                  
@@ -10,10 +10,9 @@
   tags:                                                                                                                                                                                                                                
     - undercloud_post_install
 
-- name: "Verify Glance API is operational before uploading deployment images to Undercloud."
+- name: Verify Glance API is operational before uploading deployment images to Undercloud
   shell: >
-    source "{{ uc_home_path }}/stackrc";
-    openstack image list > /dev/null
+    source '{{ uc_home_path }}'/stackrc; openstack image list > /dev/null
   args:
     executable: /bin/bash
   changed_when: false
@@ -21,19 +20,12 @@
   tags:
     - undercloud_post_install
  
-- name: Debug output 
-  debug:
-    msg: "Return code is {{ check_endpoint.rc }}"
-  tags:
-    - undercloud_post_install
-
-- name: "Uploading deployment images to Undercloud."
+- name: Uploading deployment images to Undercloud Glance
   shell: >
-    source "{{ uc_home_path }}/stackrc";
-    openstack overcloud image upload --image-path "{{ uc_home_path }}/overcloud_images" > /dev/null
+    source '{{ uc_home_path }}'/stackrc;
+    openstack overcloud image upload --image-path '{{ uc_home_path }}'/overcloud_images > /dev/null
   args:
     executable: /bin/bash
   when: check_endpoint.rc == 0
   tags:
     - undercloud_post_install
-
