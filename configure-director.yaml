@@ -2,13 +2,11 @@
 - name: '[STARTING Playbook] Deploying the Undercloud/Director Base Software.'
   hosts: director
   vars:
-    domain: holaehlo.net
     enable_git_clone: true
-    osp_templates_branch: osp16_home_lab_multi_stack
-    enable_tls_everywhere: true
-    idm_domain: '{{ domain }}'
-    idm_realm: VOLTRON.XYZ
-    idm_server: idm-a.voltron.xyz
+    osp_templates_branch: osp16_home_lab
+    enable_git_clone: true
+    github_ssh_priv_key: /home/ariveral/.ssh/id_rsa
+    github_ssh_pub_key: /home/ariveral/.ssh/id_rsa.pub
   vars_files:
     - vault/vars/director-vars.yaml
   roles:
