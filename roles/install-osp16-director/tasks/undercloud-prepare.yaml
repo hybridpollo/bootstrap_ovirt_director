@@ -110,7 +110,7 @@
     --principal '{{ idm_user_principal }}' \
     --password '{{ idm_password }}' \
     --server '{{ idm_server }}' \
-    --realm '{{ idm_domain|upper }}' \
+    --realm '{{ idm_realm }}' \
     --domain '{{ idm_domain }}' \
     --hostname '{{ uc_short_hostname}}.{{ domain }}' \
     --precreate | tee '{{ uc_home_path }}/ipa_otp'

@@ -6,7 +6,7 @@
   shell: >
     openstack undercloud install
   args:
-    chdir: '{{ uc_home_dir }}' 
+    chdir: '{{ uc_home_path }}' 
   become: yes
   become_user: stack
   tags: undercloud_install
