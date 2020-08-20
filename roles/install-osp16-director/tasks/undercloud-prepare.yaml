@@ -22,6 +22,16 @@
   tags: 
     - undercloud_config
 
+- name: Set the container-tools repository module to version 2.0
+  shell: >
+     dnf module disable -y container-tools:rhel8 ;
+     dnf module enable -y container-tools:2.0
+  retries: 10
+  args:
+    warn: false
+  tags: 
+    - undercloud_config
+
 - name: Installing tripleo packages
   yum:
     name: '{{ uc_rpm_packages }}'
