@@ -1,16 +1,16 @@
 ---
-- name: '[STARTING Playbook] Deploying the Undercloud VM.'
+- name: '[STARTING Playbook] Creating the Undercloud VM in Ovirt'
   hosts: deploy_vm
   vars:
-    ansible_python_interpreter: /home/ariveral/software/venvs/virtual_workspace/bin/python3
+    ansible_python_interpreter: /home/arlaporte/virtual_environments/ansible_osp_ws/bin/python3
     vm_domain: voltron.xyz
-    ovirt_vm_name: 'osp13-dir.{{ vm_domain }}'
+    ovirt_vm_name: 'osp-dir.{{ vm_domain }}'
     ovirt_vm_cpu: 4
-    ovirt_vm_ram: 16Gib
-    ovirt_vm_ram_guaranteed: 16Gib
+    ovirt_vm_ram: 24Gib
+    ovirt_vm_ram_guaranteed: 24Gib
     ovirt_vm_disk_size: 200Gib
-    ovirt_vm_dns_servers: '172.25.48.3 8.8.4.4'
-    ovirt_vm_dns_search: 'voltron.xyz infra.arl.lab'
+    ovirt_vm_dns_servers: '172.25.48.254 8.8.4.4'
+    ovirt_vm_dns_search: 'voltron.xyz'
     ovirt_vm_nics:
       - nic_name: eth0
         nic_on_boot: yes

@@ -21,7 +21,7 @@ ovirt_vm_ram: 8Gib
 ovirt_vm_ram_guaranteed: 8Gib
 ovirt_vm_disk_size: 60Gib
 ovirt_vm_username: root
-ovirt_vm_template: rhel-8-1-template
+ovirt_vm_template: rhel-7-8-template
 ovirt_vm_dns_servers: "172.25.48.3 8.8.4.4"
 ovirt_vm_dns_search: '{{ domain }}'
 

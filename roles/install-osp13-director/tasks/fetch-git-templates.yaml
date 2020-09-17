@@ -1,4 +1,14 @@
 ---
+- name: Ensure .ssh directory is present prior to copying ssh keys
+  file:
+    path: '{{ uc_home_path }}/.ssh' 
+    state: directory
+    owner: '{{ uc_user }}'
+    group: '{{ uc_user }}'
+    mode: 0740
+  when: enable_git_clone == True
+  tags: fetch_git_templates
+
 - name: Copy github keys to {{ uc_home_path }}/.ssh
   copy:
     src: '{{ item }}'
@@ -13,6 +23,8 @@
   tags: fetch_git_templates
 
 - name: Add github.com to known hosts file
+  become: yes
+  become_user: stack
   shell: > 
      ssh-keyscan -H github.com >> /home/stack/.ssh/known_hosts
   when: enable_git_clone == True
@@ -29,13 +41,13 @@
   tags: fetch_git_templates
 
 - name: Clone git repository for RHOSP 13 templates in to {{ uc_home_path }}/overcloud_deployment
+  become: yes
+  become_user: stack
   git:
     repo: '{{ osp_templates_repo }}'
     version: '{{ osp_templates_branch }}'
     dest: '{{ uc_home_path }}/overcloud_deployment'
     clone: yes
     accept_hostkey: yes
-  become: yes
-  become_user: stack
   when: enable_git_clone == True
   tags: fetch_git_templates

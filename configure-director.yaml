@@ -1,13 +1,14 @@
 ---
-- name: 'Configuring Undercloud on {{ uc_short_hostname }}.{{ domain }} for installation of RHOSP 13.'
-  hosts: undercloud
-  roles:
-    - role: install-osp13-director
-  vars_files:
-    - vault/vars/director-vars.yaml
+- name: '[STARTING Playbook] Deploying the Undercloud/Director Base Software.'
+  hosts: director
   vars:
-    domain: arl.lab
+    enable_git_clone: true
+    osp_templates_branch: osp13_home_lab
+    enable_git_clone: true
     github_ssh_priv_key: /home/arlaporte/.ssh/id_rsa
     github_ssh_pub_key: /home/arlaporte/.ssh/id_rsa.pub
-    osp_templates_repo: git@github.com:hybridpollo/osp_templates.git
-    osp_templates_branch: osp13_hci
+  vars_files:
+    - vault/vars/director-vars.yaml
+  roles:
+    - role: install-osp13-director
+

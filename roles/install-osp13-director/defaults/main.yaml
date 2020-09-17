@@ -7,20 +7,19 @@ domain: voltron.xyz
 time_servers:
    - clock.nyc.he.net
    - clock.fmt.he.net
-   - clock.sjc.he.net
 
 sudo_group: wheel
 user_list:
   - user_name: stack 
     uid: 1001 
 
-uc_short_hostname: osp13-dir
+uc_short_hostname: osp-dir
 uc_user: stack
 uc_group: stack
 uc_home_path: /home/stack
 uc_dirs:
   - overcloud_images
-  - templates
+  - overcloud_deployment
 
 uc_rpm_packages:
   - python-tripleoclient
@@ -46,12 +45,12 @@ rhn_rpm_repos:
 
 # List of ssh keys are used to bootstrap git
 enable_git_clone: true
-github_ssh_priv_key: /home/ariveral/.ssh/id_rsa
-github_ssh_pub_key: /home/ariveral/.ssh/id_rsa.pub
+github_ssh_priv_key: /home/arlaporte/.ssh/id_rsa
+github_ssh_pub_key: /home/arlaporte/.ssh/id_rsa.pub
 
 # Git repository to clone
 osp_templates_repo: git@github.com:hybridpollo/osp_templates.git
-osp_templates_branch: osp13_hci
+osp_templates_branch: osp13_home_lab
 
 # undercloud.conf parameters
 # these variables below are used to configure the undercloud.conf
@@ -59,7 +58,7 @@ osp_templates_branch: osp13_hci
 # please review the default file 
 # /usr/share/instack-undercloud/undercloud.conf.sample 
 # for all available parameters
-overcloud_domain: arl.lab
+overcloud_domain: voltron.xyz
 undercloud_local_interface: eth1
 undercloud_local_mtu: 1500
 undercloud_enable_uefi: false
@@ -77,8 +76,8 @@ undercloud_dhcp_inspection_start: 172.16.24.100
 undercloud_dhcp_inspection_end: 172.16.24.120
 undercloud_dhcp_gateway: 172.16.24.1
 undercloud_name_servers:
-  - 172.25.48.3
-  - 8.8.8.8
+  - 172.25.48.254
+  - 1.1.1.1
 undercloud_time_servers:
    - clock.nyc.he.net
    - clock.fmt.he.net
