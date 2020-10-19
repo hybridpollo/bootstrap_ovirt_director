@@ -2,8 +2,7 @@
 - name: '[STARTING Playbook] Deploying the Undercloud/Director Base Software.'
   hosts: director
   vars:
-    enable_git_clone: true
-    osp_templates_branch: osp13_home_lab
+    osp_templates_branch: osp13_hci
     enable_git_clone: true
     github_ssh_priv_key: /home/arlaporte/.ssh/id_rsa
     github_ssh_pub_key: /home/arlaporte/.ssh/id_rsa.pub
