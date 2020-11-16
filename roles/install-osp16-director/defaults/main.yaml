@@ -53,7 +53,7 @@ osp_templates_branch: osp16_home_lab
 
 # variables used for nova join
 # and tls everywhere
-enable_tls_everywhere: true
+enable_tls_everywhere: false
 idm_domain: voltron.xyz
 idm_realm: VOLTRON.XYZ
 idm_server: idm-a.voltron.xyz
