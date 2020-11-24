@@ -2,7 +2,7 @@
 - name: '[STARTING Playbook] Creating the Undercloud VM in Ovirt'
   hosts: deploy_vm
   vars:
-    ansible_python_interpreter: /home/arlaporte/virtual_environments/ansible_osp_ws/bin/python3
+    ansible_python_interpreter: /home/arlaporte/.python_venvs/openstack_tools/bin/python3
     vm_domain: voltron.xyz
     ovirt_vm_name: 'osp-dir.{{ vm_domain }}'
     ovirt_vm_cpu: 4
