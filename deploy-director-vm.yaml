@@ -2,7 +2,7 @@
 - name: '[STARTING Playbook] Creating the Undercloud VM in RHV'
   hosts: deploy_vm
   vars:
-    ansible_python_interpreter: /home/ariveral/software/venvs/virtual_workspace/bin/python3
+    ansible_python_interpreter: /home/arlaporte/.python_venvs/openstack_tools/bin/python3
     vm_domain: voltron.xyz
     ovirt_vm_name: 'osp-dir.{{ vm_domain }}'
     ovirt_vm_cpu: 4
