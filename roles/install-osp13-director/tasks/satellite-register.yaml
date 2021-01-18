@@ -46,7 +46,7 @@
 
 - name: Enable the configured repositories from the vars file
   rhsm_repository:
-    name: '{{ rhn_rpm_repos }}'
+    name: '{{ rhn_rpm_repos | join("") }}'
     state: enabled
   when: sat_registration.changed
   register: repo_enabled
